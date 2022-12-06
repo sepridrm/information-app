@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVideoInformationTable extends Migration
+class CreatePegawaisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreateVideoInformationTable extends Migration
      */
     public function up()
     {
-        Schema::create('video_information', function (Blueprint $table) {
+        Schema::create('pegawais', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama');
-            $table->string('path', 100);
-            $table->boolean('aktif')->default(1);
+            $table->string('nama', 50);
+            $table->string('jabatan', 50);
+            $table->string('foto', 100);
+            $table->unsignedSmallInteger('id_Pangkat');
             $table->timestamps();
+
+            $table->foreign("id_Pangkat")->references("id")->on("pangkats")->onDelete('cascade');
         });
     }
 
@@ -29,6 +32,6 @@ class CreateVideoInformationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('video_information');
+        Schema::dropIfExists('pegawais');
     }
 }
