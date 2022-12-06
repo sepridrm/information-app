@@ -34,15 +34,23 @@ class StartSeeder extends Seeder
             'golongan' => 'I/a',
         ]);
         Pangkat::create([
+            'nama' => 'Juru Muda Tk.I',
+            'golongan' => 'I/b',
+        ]);
+        Pangkat::create([
             'nama' => 'Juru',
             'golongan' => 'I/c',
+        ]);
+        Pangkat::create([
+            'nama' => 'Juru Tk.I',
+            'golongan' => 'I/d',
         ]);
         Pangkat::create([
             'nama' => 'Pengatur Muda',
             'golongan' => 'II/a',
         ]);
         Pangkat::create([
-            'nama' => 'Pengatur Muda Tk. I',
+            'nama' => 'Pengatur Muda Tk.I',
             'golongan' => 'II/b',
         ]);
         Pangkat::create([
@@ -50,11 +58,15 @@ class StartSeeder extends Seeder
             'golongan' => 'II/c',
         ]);
         Pangkat::create([
+            'nama' => 'Pengatur Tk.I',
+            'golongan' => 'II/d',
+        ]);
+        Pangkat::create([
             'nama' => 'Penata Muda',
             'golongan' => 'III/a',
         ]);
         Pangkat::create([
-            'nama' => 'Penata Muda Tk. I',
+            'nama' => 'Penata Muda Tk.I',
             'golongan' => 'III/b',
         ]);
         Pangkat::create([
@@ -62,7 +74,7 @@ class StartSeeder extends Seeder
             'golongan' => 'III/c',
         ]);
         Pangkat::create([
-            'nama' => 'Penata Tk. I',
+            'nama' => 'Penata Tk.I',
             'golongan' => 'III/d',
         ]);
         Pangkat::create([
@@ -70,7 +82,7 @@ class StartSeeder extends Seeder
             'golongan' => 'IV/a',
         ]);
         Pangkat::create([
-            'nama' => 'Pembina Tk. I',
+            'nama' => 'Pembina Tk.I',
             'golongan' => 'IV/b',
         ]);
         Pangkat::create([
