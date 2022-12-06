@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sholat;
+use App\Models\PangkatPegawai;
 use Illuminate\Http\Request;
 
-class SholatController extends Controller
+class PangkatPegawaiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class SholatController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Sholat  $sholat
+     * @param  \App\Models\PangkatPegawai  $pangkatPegawai
      * @return \Illuminate\Http\Response
      */
-    public function show(Sholat $sholat)
+    public function show(PangkatPegawai $pangkatPegawai)
     {
         //
     }
@@ -52,10 +52,10 @@ class SholatController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Sholat  $sholat
+     * @param  \App\Models\PangkatPegawai  $pangkatPegawai
      * @return \Illuminate\Http\Response
      */
-    public function edit(Sholat $sholat)
+    public function edit(PangkatPegawai $pangkatPegawai)
     {
         //
     }
@@ -64,10 +64,10 @@ class SholatController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Sholat  $sholat
+     * @param  \App\Models\PangkatPegawai  $pangkatPegawai
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sholat $sholat)
+    public function update(Request $request, PangkatPegawai $pangkatPegawai)
     {
         //
     }
@@ -75,10 +75,10 @@ class SholatController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Sholat  $sholat
+     * @param  \App\Models\PangkatPegawai  $pangkatPegawai
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sholat $sholat)
+    public function destroy(PangkatPegawai $pangkatPegawai)
     {
         //
     }

@@ -18,10 +18,7 @@ class CreatePegawaisTable extends Migration
             $table->string('nama', 50);
             $table->string('jabatan', 50);
             $table->string('foto', 100);
-            $table->unsignedSmallInteger('id_Pangkat');
             $table->timestamps();
-
-            $table->foreign("id_Pangkat")->references("id")->on("pangkats")->onDelete('cascade');
         });
     }
 
