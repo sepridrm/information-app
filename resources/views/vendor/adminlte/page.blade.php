@@ -39,9 +39,16 @@
         @endempty
 
         {{-- Footer --}}
-        @hasSection('footer')
+        {{-- @hasSection('footer')
             @include('adminlte::partials.footer.footer')
-        @endif
+        @endif --}}
+        <footer class="main-footer">
+            Copyright &copy; 2022 <a href="https://bpkad.muaraenimkab.go.id/">BPKAD Muara Enim</a>.
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                {{ config('adminlte.app_name') }} v{{ config('adminlte.app_version') }}
+            </div>
+        </footer>
 
         {{-- Right Control Sidebar --}}
         @if(config('adminlte.right_sidebar'))
