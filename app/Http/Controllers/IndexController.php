@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Information;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\Welcome;
 use App\Models\VideoInformation;
+use App\Models\Pengumuman;
 use Illuminate\Http\Request;
 
-class VideoInformationController extends Controller
+class IndexController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,14 @@ class VideoInformationController extends Controller
      */
     public function index()
     {
-        $data = VideoInformation::get();
-        return view('informations.video-information', compact(
-            'data'
+        $video = VideoInformation::first();
+        $welcome = Welcome::first();
+        $pengumuman = Pengumuman::first();
+        
+        return view('welcome', compact(
+            'welcome',
+            'video',
+            'pengumuman'
         ));
     }
 
@@ -45,10 +51,10 @@ class VideoInformationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\VideoInformation  $videoInformation
+     * @param  \App\Models\Pangkat  $pangkat
      * @return \Illuminate\Http\Response
      */
-    public function show(VideoInformation $videoInformation)
+    public function show(Pangkat $pangkat)
     {
         //
     }
@@ -56,10 +62,10 @@ class VideoInformationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\VideoInformation  $videoInformation
+     * @param  \App\Models\Pangkat  $pangkat
      * @return \Illuminate\Http\Response
      */
-    public function edit(VideoInformation $videoInformation)
+    public function edit(Pangkat $pangkat)
     {
         //
     }
@@ -68,10 +74,10 @@ class VideoInformationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\VideoInformation  $videoInformation
+     * @param  \App\Models\Pangkat  $pangkat
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, VideoInformation $videoInformation)
+    public function update(Request $request, Pangkat $pangkat)
     {
         //
     }
@@ -79,10 +85,10 @@ class VideoInformationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\VideoInformation  $videoInformation
+     * @param  \App\Models\Pangkat  $pangkat
      * @return \Illuminate\Http\Response
      */
-    public function destroy(VideoInformation $videoInformation)
+    public function destroy(Pangkat $pangkat)
     {
         //
     }

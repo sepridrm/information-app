@@ -15,18 +15,17 @@
                 </div>
 
                 <marquee scrolldelay="100">
-                    <h5>Selamat datang</h5>
+                    <h5>{{ $welcome->isi ?? 'Selamat Datang' }}</h5>
                 </marquee>
 
-                <video autoplay muted style="width: 100%">
-                    <source src="{{ asset('GRAN FONDO 2022.mp4') }}" type="video/mp4">
+                <video autoplay muted loop style="width: 100%">
+                    <source src="{{ asset('storage') }}/{{ substr($video->path, 7) }}" type="video/mp4">
                 </video>
 
                 <div class="row mt-2">
                     <div class="col-lg-8 col-8 text-center">
                         <marquee scrolldelay="100">
-                            <h5>Et et sit anim id enim excepteur tempor sunt ad sint esse. Elit nostrud aliqua reprehenderit
-                                consequat aute.</h5>
+                            <h5>{{ $pengumuman->isi ?? 'Pengumuman' }}</h5>
                         </marquee>
                     </div>
 

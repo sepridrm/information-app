@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Pangkat;
 use App\Models\Welcome;
+use App\Models\VideoInformation;
+use App\Models\Pengumuman;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -27,6 +29,15 @@ class StartSeeder extends Seeder
         
         Welcome::create([
             'isi' => 'Selamat Datang',
+        ]);
+
+        VideoInformation::create([
+            'nama' => 'Video Satu',
+            'path' => 'public/video//gsmp.MP4',
+        ]);
+
+        Pengumuman::create([
+            'isi' => 'Pengumuman Satu',
         ]);
 
         Pangkat::create([

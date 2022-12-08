@@ -14,6 +14,7 @@ class CreateWelcomesTable extends Migration
     public function up()
     {
         Schema::create('welcomes', function (Blueprint $table) {
+            $table->tinyIncrements('id');
             $table->text('isi');
             $table->timestamps();
         });

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', [IndexController::class, 'index'])->name('welcome');
 Auth::routes();
 
 Route::group(['namespace' => 'App\Http\Controllers', 'middleware' => 'auth'], function () {
@@ -25,5 +22,6 @@ Route::group(['namespace' => 'App\Http\Controllers', 'middleware' => 'auth'], fu
 
     Route::group(['namespace' => 'Information'], function () {
         Route::resource('video', VideoInformationController::class);
+        Route::resource('image', ImageInformationController::class);
     });
 });
