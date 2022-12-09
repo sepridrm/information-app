@@ -6,6 +6,7 @@ use App\Models\Welcome;
 use App\Models\VideoInformation;
 use App\Models\Pengumuman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class IndexController extends Controller
 {
@@ -16,6 +17,7 @@ class IndexController extends Controller
      */
     public function index()
     {
+        $schedule = Http::get('https://api.banghasan.com/sholat/format/json/jadwal/kota/613/tanggal/'.date("Y-m-d"))->json()['jadwal']['data'];
         $video = VideoInformation::first();
         $welcome = Welcome::first();
         $pengumuman = Pengumuman::first();
@@ -23,7 +25,8 @@ class IndexController extends Controller
         return view('welcome', compact(
             'welcome',
             'video',
-            'pengumuman'
+            'pengumuman',
+            'schedule'
         ));
     }
 
