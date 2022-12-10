@@ -1,21 +1,32 @@
 @extends('adminlte::master')
 
+@section('title', 'BPKAD Muara Enim')
+
 @section('body')
     <div class="wrapper p-3">
         <div class="row">
             <div class="col-lg-8 col-8">
                 <div class="row mb-2">
-                    <div class="col-lg-3 col-3 text-center">
-                        <img class="img-fluid" src="vendor/adminlte/dist/img/AdminLTELogo.png">
+                    <div class="col-lg-1 col-1 text-center">
+                        <img class="img-fluid" src="vendor/adminlte/dist/img/merinem.png" style="width: 55px; height: 55px;">
                     </div>
 
-                    <div class="col-lg-9 col-9 d-flex align-items-center">
-                        <div>Admin LTE</div>
+                    <div class="col-lg-11 col-11 d-flex align-items-center">
+                        <div class="row">
+                            <div class="col-lg-3 col-3">
+                                <h4 class="mb-0">BPKAD Muara Enim</h4>
+                            </div>
+                            <div class="col-lg-9 col-9">
+                                <marquee>
+                                    Jadwal sholat hari ini atau tanggal {{ $schedule['tanggal'] }} untuk wilayah Kab. Muara Enim, <strong>Subuh: {{ $schedule['subuh'] }} WIB</strong> | <strong>Dzuhur: {{ $schedule['dzuhur'] }} WIB</strong> | <strong>Ashar: {{ $schedule['ashar'] }} WIB</strong> | <strong>Magrib: {{ $schedule['maghrib'] }} WIB</strong> | <strong>Isya: {{ $schedule['isya'] }} WIB</strong>
+                                </marquee>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <marquee scrolldelay="100">
-                    <h5>{{ $welcome->isi ?? 'Selamat Datang' }}</h5>
+                <marquee scrolldelay="100" class="bg-success p-1">
+                    <h5 class="mb-0">{{ $welcome->isi ?? 'Selamat Datang' }}</h5>
                 </marquee>
 
                 @if (!$video->count() == 0)
@@ -26,8 +37,8 @@
 
                 <div class="row mt-2">
                     <div class="col-lg-8 col-8 text-center">
-                        <marquee scrolldelay="100">
-                            <h5>{{ $pengumuman->isi ?? 'Pengumuman' }}</h5>
+                        <marquee scrolldelay="100" class="bg-success p-1">
+                            <h5 class="mb-0">{{ $pengumuman->isi ?? 'Pengumuman' }}</h5>
                         </marquee>
                     </div>
 
@@ -86,27 +97,27 @@
                 <div id="carousel1" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img class="img-fluid w-100" src="img/slide.png" alt="First slide">
+                            <img class="img-fluid w-100" src="img/slide1.jpeg" alt="First slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="img-fluid w-100" src="img/slide.png" alt="Second slide">
+                            <img class="img-fluid w-100" src="img/slide1.jpeg" alt="Second slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="img-fluid w-100" src="img/slide.png" alt="Third slide">
+                            <img class="img-fluid w-100" src="img/slide1.jpeg" alt="Third slide">
                         </div>
                     </div>
                 </div>
 
-                <div id="carousel1" class="carousel slide" data-ride="carousel">
+                <div id="carousel1" class="carousel slide mt-2" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img class="img-fluid w-100" src="img/slide.png" alt="First slide">
+                            <img class="img-fluid w-100" src="img/slide2.jpeg" alt="First slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="img-fluid w-100" src="img/slide.png" alt="Second slide">
+                            <img class="img-fluid w-100" src="img/slide2.jpeg" alt="Second slide">
                         </div>
                         <div class="carousel-item">
-                            <img class="img-fluid w-100" src="img/slide.png" alt="Third slide">
+                            <img class="img-fluid w-100" src="img/slide2.jpeg" alt="Third slide">
                         </div>
                     </div>
                 </div>
