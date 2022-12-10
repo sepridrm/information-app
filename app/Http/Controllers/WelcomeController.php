@@ -14,7 +14,10 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        //
+        $data = Welcome::get();
+        return view('welcome.welcome', compact(
+            'data'
+        ));
     }
 
     /**
@@ -69,7 +72,21 @@ class WelcomeController extends Controller
      */
     public function update(Request $request, Welcome $welcome)
     {
-        //
+        if ($request->ajax()) {
+            $update = Welcome::find($request->id);
+            $update->nama = $request->name;
+            if ($request->file("file") != "") {
+                $extention = $request->file("file")->getClientOriginalExtension();
+                $nama_file = $request->name.".".$extention;
+
+                Storage::delete($update->path);
+                $newPath = $request->file("file")->storeAs("public/video/", $nama_file);
+                $update->path = $newPath;
+            }
+            $update->save();
+
+            return response()->json(['success' => 'Data berhasil diubah']);
+        }
     }
 
     /**

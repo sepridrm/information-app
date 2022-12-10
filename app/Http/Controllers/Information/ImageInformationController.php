@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
 
+namespace App\Http\Controllers\Information;
+
+use App\Http\Controllers\Controller;
 use App\Models\ImageInformation;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,10 @@ class ImageInformationController extends Controller
      */
     public function index()
     {
-        //
+        $data = ImageInformation::get();
+        return view('informations.image-information', compact(
+            'data'
+        ));
     }
 
     /**
@@ -35,7 +40,17 @@ class ImageInformationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $extention = $request->file("file")->getClientOriginalExtension();
+            $nama_file = $request->name.".".$extention;
+
+            $new = new ImageInformation();
+            $new->nama = $request->name;
+            $new->path = $request->file("file")->storeAs("public/video/", $nama_file);
+            $new->save();
+
+            return response()->json(['success' => 'Data berhasil ditambah']);
+        }
     }
 
     /**
@@ -67,9 +82,34 @@ class ImageInformationController extends Controller
      * @param  \App\Models\ImageInformation  $imageInformation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ImageInformation $imageInformation)
+    public function update(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $update = ImageInformation::find($request->id);
+            $update->nama = $request->name;
+            if ($request->file("file") != "") {
+                $extention = $request->file("file")->getClientOriginalExtension();
+                $nama_file = $request->name.".".$extention;
+
+                Storage::delete($update->path);
+                $newPath = $request->file("file")->storeAs("public/video/", $nama_file);
+                $update->path = $newPath;
+            }
+            $update->save();
+
+            return response()->json(['success' => 'Data berhasil diubah']);
+        }
+    }
+
+    public function change_status(Request $request)
+    {
+        if ($request->ajax()) {
+            $status = ImageInformation::find($request->id_change);
+            $status->aktif = $request->st;
+            $status->save();
+
+            return response()->json(['success' => 'Status berhasil diubah']);
+        }
     }
 
     /**
@@ -78,8 +118,15 @@ class ImageInformationController extends Controller
      * @param  \App\Models\ImageInformation  $imageInformation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ImageInformation $imageInformation)
+    public function destroy(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $view = ImageInformation::find($request->id);
+            Storage::delete($view->file);
+            Arsip::destroy($request->id);
+
+            return response()->json(['success' => 'Data berhasil dihapus']);
+        }
     }
 }
+

@@ -39,7 +39,17 @@ class VideoInformationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $extention = $request->file("file")->getClientOriginalExtension();
+            $nama_file = $request->name.".".$extention;
+
+            $new = new VideoInformation();
+            $new->nama = $request->name;
+            $new->path = $request->file("file")->storeAs("public/video/", $nama_file);
+            $new->save();
+
+            return response()->json(['success' => 'Data berhasil ditambah']);
+        }
     }
 
     /**
@@ -71,9 +81,34 @@ class VideoInformationController extends Controller
      * @param  \App\Models\VideoInformation  $videoInformation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, VideoInformation $videoInformation)
+    public function update(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $update = VideoInformation::find($request->id);
+            $update->nama = $request->name;
+            if ($request->file("file") != "") {
+                $extention = $request->file("file")->getClientOriginalExtension();
+                $nama_file = $request->name.".".$extention;
+
+                Storage::delete($update->path);
+                $newPath = $request->file("file")->storeAs("public/video/", $nama_file);
+                $update->path = $newPath;
+            }
+            $update->save();
+
+            return response()->json(['success' => 'Data berhasil diubah']);
+        }
+    }
+
+    public function change_status(Request $request)
+    {
+        if ($request->ajax()) {
+            $status = VideoInformation::find($request->id_change);
+            $status->aktif = $request->st;
+            $status->save();
+
+            return response()->json(['success' => 'Status berhasil diubah']);
+        }
     }
 
     /**
@@ -82,8 +117,14 @@ class VideoInformationController extends Controller
      * @param  \App\Models\VideoInformation  $videoInformation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(VideoInformation $videoInformation)
+    public function destroy(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $view = VideoInformation::find($request->id);
+            Storage::delete($view->file);
+            Arsip::destroy($request->id);
+
+            return response()->json(['success' => 'Data berhasil dihapus']);
+        }
     }
 }

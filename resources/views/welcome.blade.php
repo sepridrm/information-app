@@ -18,9 +18,11 @@
                     <h5>{{ $welcome->isi ?? 'Selamat Datang' }}</h5>
                 </marquee>
 
-                <video autoplay muted loop style="width: 100%">
-                    <source src="{{ asset('storage') }}/{{ substr($video->path, 7) }}" type="video/mp4">
-                </video>
+                @if (!$video->count() == 0)
+                    <video autoplay muted loop style="width: 100%">
+                        <source src="{{ asset('storage') }}/{{ substr($video->path, 7) }}" type="video/mp4">
+                    </video>
+                @endif
 
                 <div class="row mt-2">
                     <div class="col-lg-8 col-8 text-center">

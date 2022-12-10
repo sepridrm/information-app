@@ -345,11 +345,23 @@ return [
             'label_color' => 'success',
         ],
         [
-            'text'        => 'Text informasi',
-            'url'         => 'text',
+            'text'        => 'Pengumuman',
+            'url'         => 'pengumuman',
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
         ],
+        [
+            'text'        => 'Welcome',
+            'url'         => 'welcome',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+        // [
+        //     'text'        => 'Text informasi',
+        //     'url'         => 'text',
+        //     'icon'        => 'far fa-fw fa-file',
+        //     'label_color' => 'success',
+        // ],
         // ['header' => 'account_settings'],
         // [
         //     'text' => 'profile',

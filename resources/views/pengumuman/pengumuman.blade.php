@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'Data Video Informasi')
+@section('title', 'Data Pengumuman')
 
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1>Video Informasi</h1>
+            <h1>Pengumuman</h1>
         </div>
     </div>
 @stop
@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="card card-outline card-warning">
                 <div class="card-header">
-                    <h3 class="card-title">Master {{ __('sidebar.video') }}
+                    <h3 class="card-title">Master {{ __('sidebar.image') }}
                         <button type="button" class="btn btn-success btn-sm btnTambah" id="create-item"
                             data-title="create">Tambah</button>
                     </h3>
@@ -33,8 +33,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Judul</th>
-                                <th>Video</th>
+                                <th>Isi</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -42,18 +41,7 @@
                             @foreach ($data as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->nama }}</td>
-                                    <td>
-                                        @if ($item->path != '')
-                                            <video width="300px" height="100px" controls>
-                                                <source src="{{ asset('storage') }}/{{ substr($item->path, 7) }}"
-                                                    type="video/mp4">
-                                            </video>
-                                        @else
-                                            <img width="100px" height="100px"
-                                                src="{{ asset('storage/assets/default.jpg') }}" />
-                                        @endif
-                                    </td>
+                                    <td>{{ $item->isi }}</td>
                                     <td>
                                         <a href="javascript:;"
                                             class="btn btn-sm btn-warning btn-round btn-icon d-inline-block"
@@ -64,21 +52,21 @@
                                         @if ($item->aktif == 1)
                                             <a href="javascript:;" id="change-item" class="btn btn-sm btn-success"
                                                 data-id="{{ $item->id }}" data-toggle="tooltip" data-st="0"
-                                                data-status="Tidak Aktif" data-menu="video" data-nama="{{ $item->nama }}"
+                                                data-status="Tidak Aktif" data-menu="image" data-nama="{{ $item->nama }}"
                                                 data-original-title="Change data">
                                                 Aktif
                                             </a>
                                         @else
                                             <a href="javascript:;" id="change-item" class="btn btn-sm btn-danger"
                                                 data-id="{{ $item->id }}" data-toggle="tooltip" data-st="1"
-                                                data-status="Aktif" data-menu="video" data-nama="{{ $item->nama }}"
+                                                data-status="Aktif" data-menu="image" data-nama="{{ $item->nama }}"
                                                 data-original-title="Change data">
                                                 Tidak Aktif
                                             </a>
                                         @endif
 
                                         <a href="javascript:;" id="delete-item" class="btn btn-sm btn-danger"
-                                            data-id="{{ $item->id }}" data-toggle="tooltip" data-menu="video"
+                                            data-id="{{ $item->id }}" data-toggle="tooltip" data-menu="image"
                                             data-nama="{{ $item->nama }}" data-original-title="Delete data">
                                             <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
                                         </a>
@@ -119,14 +107,14 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="video">Video</label>
+                                    <label for="image">Gambar</label>
                                     <input type="text" class="form-control mb-3" id="nama_file" name="nama_file"
                                         disabled>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="file"
-                                                name="video" accept="video/*">
-                                            <label class="custom-file-label" for="video">Pilih Gambar</label>
+                                                name="image" accept="images/*">
+                                            <label class="custom-file-label" for="image">Pilih Gambar</label>
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +136,7 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('js/modal-show-video.js') }}"></script>
+    <script src="{{ asset('js/modal-show-image.js') }}"></script>
 
     <!-- change -->
     <script type="text/javascript">
@@ -163,14 +151,14 @@
                     processData: false,
                     contentType: false,
                     data: formdata,
-                    url: "{{ route('change.status.video') }}",
+                    url: "{{ route('change.status.image') }}",
                     type: "POST",
                     enctype: 'multipart/form-data',
                     dataType: 'json',
                     success: function(data) {
                         setTimeout(function() {
                             $('#modal-change').modal('hide');
-                            location.replace("{{ route('video.index') }}")
+                            location.replace("{{ route('image.index') }}")
                         }, 2200);
                     },
                     error: function(data) {
@@ -199,14 +187,14 @@
                     processData: false,
                     contentType: false,
                     data: formdata,
-                    url: "{{ route('video.destroy') }}",
+                    url: "{{ route('image.destroy') }}",
                     type: "POST",
                     enctype: 'multipart/form-data',
                     dataType: 'json',
                     success: function(data) {
                         setTimeout(function() {
                             $('#modal-delete').modal('hide');
-                            location.replace("{{ route('video.index') }}")
+                            location.replace("{{ route('image.index') }}")
                         }, 2200);
                     },
                     error: function(data) {
@@ -236,7 +224,7 @@
                         processData: false,
                         contentType: false,
                         data: formdata,
-                        url: "{{ route('video.store') }}",
+                        url: "{{ route('image.store') }}",
                         type: "POST",
                         enctype: 'multipart/form-data',
                         dataType: 'json',
@@ -244,7 +232,7 @@
                             setTimeout(function() {
                                 $('#modal_cu').modal('hide');
                                 location.replace(
-                                    "{{ route('video.index') }}"
+                                    "{{ route('image.index') }}"
                                 )
                             }, 2200);
                         },
@@ -265,7 +253,7 @@
                         processData: false,
                         contentType: false,
                         data: data,
-                        url: "{{ route('video.update') }}",
+                        url: "{{ route('image.update') }}",
                         type: "POST",
                         enctype: 'multipart/form-data',
                         dataType: 'json',
@@ -273,7 +261,7 @@
                             setTimeout(function() {
                                 $('#modal_cu').modal('hide');
                                 location.replace(
-                                    "{{ route('video.index') }}"
+                                    "{{ route('image.index') }}"
                                 )
                             }, 2200);
                         },
