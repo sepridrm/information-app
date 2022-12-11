@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'BPKAD Muara Enim',
     'title_prefix' => '',
     'title_postfix' => '',
 
