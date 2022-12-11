@@ -3,7 +3,7 @@
 @section('title', 'BPKAD Muara Enim')
 
 @section('body')
-    <div class="wrapper bg-white">
+    <div class="wrapper bg-white d-flex align-items-center justify-content-center">
         <div class="row">
             <div class="col-lg-8 col-8 pt-1">
                 <div class="row">
@@ -46,15 +46,15 @@
                     </div>
                     <div class="col-lg-8 col-8 text-center bg-success py-3 px-0">
                         <div class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
+                            <div class="carousel-inner px-2">
                                 @foreach ($pengumuman as $item)
                                     @if($loop->index == 0)
                                         <div class="carousel-item active">
-                                            <h4 class="mb-0">{{ $item->isi }}</h4>
+                                            <h5 class="mb-0">{{ $item->isi }}</h5>
                                         </div>
                                     @else
                                         <div class="carousel-item">
-                                            <h4 class="mb-0">{{ $item->isi }}</h4>
+                                            <h5 class="mb-0">{{ $item->isi }}</h5>
                                         </div>
                                     @endif
                                 @endforeach
