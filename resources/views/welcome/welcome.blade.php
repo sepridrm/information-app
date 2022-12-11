@@ -42,7 +42,7 @@
                                         <a href="javascript:;"
                                             class="btn btn-sm btn-warning btn-round btn-icon d-inline-block"
                                             id="update-item" data-title="update" data-id="{{ $item->id }}"
-                                            data-nama="{{ $item->nama }}" data-path="{{ substr($item->path, 14) }}"
+                                            data-isi="{{ $item->isi }}" data-path="{{ substr($item->path, 14) }}"
                                             title="Edit"><i class="fas fa-edit"></i></a>
                                     </td>
                                 </tr>
@@ -73,24 +73,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="name">Nama</label>
-                                    <input type="text" name="name" class="form-control" id="name"
-                                        placeholder="Nama">
+                                    <label for="isi">Isi</label>
+                                    <input type="text" name="isi" class="form-control" id="isi"
+                                        placeholder="Isi">
                                     <div class="invalid-feedback error-name"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="image">Gambar</label>
-                                    <input type="text" class="form-control mb-3" id="nama_file" name="nama_file"
-                                        disabled>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="file" name="image"
-                                                accept="images/*">
-                                            <label class="custom-file-label" for="image">Pilih Gambar</label>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -110,79 +96,7 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('js/modal-show-image.js') }}"></script>
-
-    <!-- change -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#btnchange').click(function(e) {
-                e.preventDefault();
-                $(this).html('Proses Update..');
-                $('#btnchange').attr("disabled", true);
-                var form = $('#changeForm')[0];
-                var formdata = new FormData(form);
-                $.ajax({
-                    processData: false,
-                    contentType: false,
-                    data: formdata,
-                    url: "{{ route('change.status.image') }}",
-                    type: "POST",
-                    enctype: 'multipart/form-data',
-                    dataType: 'json',
-                    success: function(data) {
-                        setTimeout(function() {
-                            $('#modal-change').modal('hide');
-                            location.replace("{{ route('image.index') }}")
-                        }, 2200);
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                        jQuery('.alert-danger').hide();
-                        setTimeout(function() {
-                            $('#btnchange').html('Ubah');
-                            $('#btnchange').attr("disabled", false);
-                        }, 2200);
-                    }
-                });
-            });
-        });
-    </script>
-
-    <!-- delete -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#btndelete').click(function(e) {
-                e.preventDefault();
-                $(this).html('Proses Delete..');
-                $('#btndelete').attr("disabled", true);
-                var form = $('#deleteForm')[0];
-                var formdata = new FormData(form);
-                $.ajax({
-                    processData: false,
-                    contentType: false,
-                    data: formdata,
-                    url: "{{ route('image.destroy') }}",
-                    type: "POST",
-                    enctype: 'multipart/form-data',
-                    dataType: 'json',
-                    success: function(data) {
-                        setTimeout(function() {
-                            $('#modal-delete').modal('hide');
-                            location.replace("{{ route('image.index') }}")
-                        }, 2200);
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                        jQuery('.alert-danger').hide();
-                        setTimeout(function() {
-                            $('#btndelete').html('Delete');
-                            $('#btndelete').attr("disabled", false);
-                        }, 2200);
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('js/modal-show-welcome.js') }}"></script>
 
     {{-- action --}}
     <script type="text/javascript">
@@ -193,63 +107,35 @@
                 $('#btnsubmit').attr("disabled", true);
                 var form = $('#modalForm')[0];
                 var formdata = new FormData(form);
-                if ($("#modal_cu #id").val() == "") {
-                    $.ajax({
-                        processData: false,
-                        contentType: false,
-                        data: formdata,
-                        url: "{{ route('image.store') }}",
-                        type: "POST",
-                        enctype: 'multipart/form-data',
-                        dataType: 'json',
-                        success: function(data) {
-                            setTimeout(function() {
-                                $('#modal_cu').modal('hide');
-                                location.replace(
-                                    "{{ route('image.index') }}"
-                                )
-                            }, 2200);
-                        },
-                        error: function(data) {
-                            console.log('Error:', data);
-                            jQuery('.alert-danger').hide();
-                            setTimeout(function() {
-                                $('#btnsubmit').html('Simpan');
-                                $('#btnsubmit').attr("disabled",
-                                    false);
-                            }, 2200);
-                        }
-                    });
-                } else {
-                    let data = formdata;
-                    data.append("_method", 'PATCH');
-                    $.ajax({
-                        processData: false,
-                        contentType: false,
-                        data: data,
-                        url: "{{ route('image.update') }}",
-                        type: "POST",
-                        enctype: 'multipart/form-data',
-                        dataType: 'json',
-                        success: function(data) {
-                            setTimeout(function() {
-                                $('#modal_cu').modal('hide');
-                                location.replace(
-                                    "{{ route('image.index') }}"
-                                )
-                            }, 2200);
-                        },
-                        error: function(data) {
-                            console.log('Error:', data);
-                            jQuery('.alert-danger').hide();
-                            setTimeout(function() {
-                                $('#btnsubmit').html('Simpan');
-                                $('#btnsubmit').attr("disabled",
-                                    false);
-                            }, 2200);
-                        }
-                    });
-                }
+
+                let data = formdata;
+                data.append("_method", 'PATCH');
+                $.ajax({
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    url: "{{ route('welcome.update') }}",
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    dataType: 'json',
+                    success: function(data) {
+                        setTimeout(function() {
+                            $('#modal_cu').modal('hide');
+                            location.replace(
+                                "{{ route('welcome.index') }}"
+                            )
+                        }, 2200);
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                        jQuery('.alert-danger').hide();
+                        setTimeout(function() {
+                            $('#btnsubmit').html('Simpan');
+                            $('#btnsubmit').attr("disabled",
+                                false);
+                        }, 2200);
+                    }
+                });
             });
         });
     </script>

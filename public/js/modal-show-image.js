@@ -37,15 +37,13 @@ $(function () {
     })
     $('#modal-change').on('show.bs.modal', function() {
         var el = $(".change-item-trigger-clicked");
-        var row = el.closest(".data-row");
-
+        
         var id = el.data('id');
         var st = el.data('st');
-        var menu = el.data("menu");
         var nama = el.data("nama");
         var status = el.data("status");
 
-        $("#id_change").val(id);
+        $("#id").val(id);
         $("#st").val(st);
         $("#status_change").val(status);
         $("#modal-change .modal-title").text("Ubah Status Gambar");

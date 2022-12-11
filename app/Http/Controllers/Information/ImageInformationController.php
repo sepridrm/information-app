@@ -6,6 +6,8 @@ namespace App\Http\Controllers\Information;
 use App\Http\Controllers\Controller;
 use App\Models\ImageInformation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class ImageInformationController extends Controller
 {
@@ -42,11 +44,11 @@ class ImageInformationController extends Controller
     {
         if ($request->ajax()) {
             $extention = $request->file("file")->getClientOriginalExtension();
-            $nama_file = $request->name.".".$extention;
+            $nama_file = $request->name.Carbon::now()->timestamp.".".$extention;
 
             $new = new ImageInformation();
             $new->nama = $request->name;
-            $new->path = $request->file("file")->storeAs("public/video/", $nama_file);
+            $new->path = $request->file("file")->storeAs("public/image/", $nama_file);
             $new->save();
 
             return response()->json(['success' => 'Data berhasil ditambah']);
@@ -89,10 +91,10 @@ class ImageInformationController extends Controller
             $update->nama = $request->name;
             if ($request->file("file") != "") {
                 $extention = $request->file("file")->getClientOriginalExtension();
-                $nama_file = $request->name.".".$extention;
+                $nama_file = $request->name.Carbon::now()->timestamp.".".$extention;
 
                 Storage::delete($update->path);
-                $newPath = $request->file("file")->storeAs("public/video/", $nama_file);
+                $newPath = $request->file("file")->storeAs("public/image/", $nama_file);
                 $update->path = $newPath;
             }
             $update->save();
@@ -104,7 +106,7 @@ class ImageInformationController extends Controller
     public function change_status(Request $request)
     {
         if ($request->ajax()) {
-            $status = ImageInformation::find($request->id_change);
+            $status = ImageInformation::find($request->id);
             $status->aktif = $request->st;
             $status->save();
 
@@ -122,8 +124,8 @@ class ImageInformationController extends Controller
     {
         if ($request->ajax()) {
             $view = ImageInformation::find($request->id);
-            Storage::delete($view->file);
-            Arsip::destroy($request->id);
+            Storage::delete($view->path);
+            ImageInformation::destroy($request->id);
 
             return response()->json(['success' => 'Data berhasil dihapus']);
         }

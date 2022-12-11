@@ -46,7 +46,7 @@
                                     <td>
                                         @if ($item->path != '')
                                             <img width="100px" height="100px"
-                                                src="{{ asset('storage') }}/{{ substr($item->pat, 7) }}" />
+                                                src="{{ asset('storage') }}/{{ substr($item->path, 7) }}" />
                                         @else
                                             <img width="100px" height="100px"
                                                 src="{{ asset('storage/assets/default.jpg') }}" />
@@ -61,23 +61,21 @@
 
                                         @if ($item->aktif == 1)
                                             <a href="javascript:;" id="change-item" class="btn btn-sm btn-success"
-                                                data-id="{{ $item->id }}" data-toggle="tooltip" data-st="0"
-                                                data-status="Tidak Aktif" data-menu="image" data-nama="{{ $item->nama }}"
-                                                data-original-title="Change data">
+                                                data-id="{{ $item->id }}" data-st="0" data-status="Tidak Aktif"
+                                                data-nama="{{ $item->nama }}" data-title="Change data">
                                                 Aktif
                                             </a>
                                         @else
                                             <a href="javascript:;" id="change-item" class="btn btn-sm btn-danger"
-                                                data-id="{{ $item->id }}" data-toggle="tooltip" data-st="1"
-                                                data-status="Aktif" data-menu="image" data-nama="{{ $item->nama }}"
-                                                data-original-title="Change data">
+                                                data-id="{{ $item->id }}" data-st="1" data-status="Aktif"
+                                                data-nama="{{ $item->nama }}" data-title="Change data">
                                                 Tidak Aktif
                                             </a>
                                         @endif
 
                                         <a href="javascript:;" id="delete-item" class="btn btn-sm btn-danger"
-                                            data-id="{{ $item->id }}" data-toggle="tooltip" data-menu="image"
-                                            data-nama="{{ $item->nama }}" data-original-title="Delete data">
+                                            data-id="{{ $item->id }}" data-nama="{{ $item->nama }}"
+                                            data-title="Delete data">
                                             <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
                                         </a>
                                     </td>
@@ -123,7 +121,7 @@
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="file"
-                                                name="image" accept="images/*">
+                                                name="file" accept="image/*">
                                             <label class="custom-file-label" for="image">Pilih Gambar</label>
                                         </div>
                                     </div>

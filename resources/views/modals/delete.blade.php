@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <h5 class="modal-title"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -13,7 +13,7 @@
                     @method('delete')
                     <div class="card-body">
                         <div class="isi"></div>
-                        <input type="hidden" name="id_delete" id="id_delete">
+                        <input type="hidden" name="id" id="id">
                     </div>
                 </form>
             </div>
