@@ -39,12 +39,8 @@ class PengumumanController extends Controller
     public function store(Request $request)
     {
         if ($request->ajax()) {
-            $extention = $request->file("file")->getClientOriginalExtension();
-            $nama_file = $request->name.".".$extention;
-
             $new = new Pengumuman();
-            $new->nama = $request->name;
-            $new->path = $request->file("file")->storeAs("public/video/", $nama_file);
+            $new->isi = $request->isi;
             $new->save();
 
             return response()->json(['success' => 'Data berhasil ditambah']);
@@ -84,15 +80,7 @@ class PengumumanController extends Controller
     {
         if ($request->ajax()) {
             $update = Pengumuman::find($request->id);
-            $update->nama = $request->name;
-            if ($request->file("file") != "") {
-                $extention = $request->file("file")->getClientOriginalExtension();
-                $nama_file = $request->name.".".$extention;
-
-                Storage::delete($update->path);
-                $newPath = $request->file("file")->storeAs("public/video/", $nama_file);
-                $update->path = $newPath;
-            }
+            $update->isi = $request->isi;
             $update->save();
 
             return response()->json(['success' => 'Data berhasil diubah']);
@@ -102,7 +90,7 @@ class PengumumanController extends Controller
     public function change_status(Request $request)
     {
         if ($request->ajax()) {
-            $status = Pengumuman::find($request->id_change);
+            $status = Pengumuman::find($request->id);
             $status->aktif = $request->st;
             $status->save();
 
@@ -119,9 +107,7 @@ class PengumumanController extends Controller
     public function destroy(Request $request)
     {
         if ($request->ajax()) {
-            $view = Pengumuman::find($request->id);
-            Storage::delete($view->file);
-            Arsip::destroy($request->id);
+            Pengumuman::destroy($request->id);
 
             return response()->json(['success' => 'Data berhasil dihapus']);
         }

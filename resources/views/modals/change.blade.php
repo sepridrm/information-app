@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <h5 class="modal-title"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -13,7 +13,7 @@
                     @method('patch')
                     <div class="card-body">
                         <div class="isi"></div>
-                        <input type="hidden" name="id_change" id="id_change">
+                        <input type="hidden" name="id" id="id">
                         <input type="hidden" name="st" id="st">
                         <input type="hidden" name="status_change" id="status_change">
                     </div>

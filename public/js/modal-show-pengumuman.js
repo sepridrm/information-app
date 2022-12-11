@@ -11,17 +11,13 @@ $(function () {
         var el = $(".create-item-trigger-clicked");
         if (el.data('title') == "create") {
             $("#modal_cu .modal-title").text("Tambah Pengumuman");
-            $("#modal_cu #name").val("");
-            $("#modal_cu #nama_file").attr("hidden", true);
+            $("#modal_cu #isi").val("");
             $("#modal_cu #id").val("");
         } else {
             var id = el.data('id');
-            var nama = el.data('nama');
-            var file = el.data('path');
+            var isi = el.data('isi');
             $("#modal_cu .modal-title").text("Ubah Pengumuman");
-            $("#modal_cu #name").val(nama);
-            $("#modal_cu #nama_file").attr("hidden", false);
-            $("#modal_cu #nama_file").val(file);
+            $("#modal_cu #isi").val(isi);
             $("#modal_cu #id").val(id);
         }
     })
@@ -37,15 +33,13 @@ $(function () {
     })
     $('#modal-change').on('show.bs.modal', function() {
         var el = $(".change-item-trigger-clicked");
-        var row = el.closest(".data-row");
-
+        
         var id = el.data('id');
         var st = el.data('st');
-        var menu = el.data("menu");
         var nama = el.data("nama");
         var status = el.data("status");
 
-        $("#id_change").val(id);
+        $("#id").val(id);
         $("#st").val(st);
         $("#status_change").val(status);
         $("#modal-change .modal-title").text("Ubah Status Pengumuman");

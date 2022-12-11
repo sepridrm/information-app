@@ -37,19 +37,17 @@ $(function () {
     })
     $('#modal-change').on('show.bs.modal', function() {
         var el = $(".change-item-trigger-clicked");
-        var row = el.closest(".data-row");
-
+        
         var id = el.data('id');
         var st = el.data('st');
-        var menu = el.data("menu");
         var nama = el.data("nama");
         var status = el.data("status");
 
-        $("#id_change").val(id);
+        $("#id").val(id);
         $("#st").val(st);
         $("#status_change").val(status);
         $("#modal-change .modal-title").text("Ubah Status Video");
-        $("#modal-change .isi").text("Apakah anda yakin ingin mengubah video" + nama +
+        $("#modal-change .isi").text("Apakah anda yakin ingin mengubah Video" + nama +
             " ini menjadi " + status + " ?");
 
     })
@@ -70,7 +68,7 @@ $(function () {
 
         $("#modal-delete #id").val(id);
         $("#modal-delete .modal-title").text("Hapus Video");
-        $("#modal-delete .isi").text("Apakah anda yakin ingin menghapus video " + nama +
+        $("#modal-delete .isi").text("Apakah anda yakin ingin menghapus Video " + nama +
             " ini ?");
 
     })

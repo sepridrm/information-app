@@ -46,28 +46,26 @@
                                         <a href="javascript:;"
                                             class="btn btn-sm btn-warning btn-round btn-icon d-inline-block"
                                             id="update-item" data-title="update" data-id="{{ $item->id }}"
-                                            data-nama="{{ $item->nama }}" data-path="{{ substr($item->path, 14) }}"
+                                            data-isi="{{ $item->isi }}" data-path="{{ substr($item->path, 14) }}"
                                             title="Edit"><i class="fas fa-edit"></i></a>
 
                                         @if ($item->aktif == 1)
                                             <a href="javascript:;" id="change-item" class="btn btn-sm btn-success"
-                                                data-id="{{ $item->id }}" data-toggle="tooltip" data-st="0"
-                                                data-status="Tidak Aktif" data-menu="image" data-nama="{{ $item->nama }}"
-                                                data-original-title="Change data">
+                                                data-id="{{ $item->id }}" data-st="0" data-status="Tidak Aktif"
+                                                data-nama="{{ $item->isi }}" data-title="Change data">
                                                 Aktif
                                             </a>
                                         @else
                                             <a href="javascript:;" id="change-item" class="btn btn-sm btn-danger"
-                                                data-id="{{ $item->id }}" data-toggle="tooltip" data-st="1"
-                                                data-status="Aktif" data-menu="image" data-nama="{{ $item->nama }}"
-                                                data-original-title="Change data">
+                                                data-id="{{ $item->id }}" data-st="1" data-status="Aktif"
+                                                data-nama="{{ $item->isi }}" data-title="Change data">
                                                 Tidak Aktif
                                             </a>
                                         @endif
 
                                         <a href="javascript:;" id="delete-item" class="btn btn-sm btn-danger"
-                                            data-id="{{ $item->id }}" data-toggle="tooltip" data-menu="image"
-                                            data-nama="{{ $item->nama }}" data-original-title="Delete data">
+                                            data-id="{{ $item->id }}" data-nama="{{ $item->isi }}"
+                                            data-title="Delete data">
                                             <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
                                         </a>
                                     </td>
@@ -99,24 +97,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="name">Nama</label>
-                                    <input type="text" name="name" class="form-control" id="name"
-                                        placeholder="Nama">
+                                    <label for="isi">Isi</label>
+                                    <input type="text" name="isi" class="form-control" id="isi"
+                                        placeholder="Isi">
                                     <div class="invalid-feedback error-name"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="image">Gambar</label>
-                                    <input type="text" class="form-control mb-3" id="nama_file" name="nama_file"
-                                        disabled>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="file"
-                                                name="image" accept="images/*">
-                                            <label class="custom-file-label" for="image">Pilih Gambar</label>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -136,7 +120,7 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('js/modal-show-image.js') }}"></script>
+    <script src="{{ asset('js/modal-show-pengumuman.js') }}"></script>
 
     <!-- change -->
     <script type="text/javascript">
@@ -151,14 +135,14 @@
                     processData: false,
                     contentType: false,
                     data: formdata,
-                    url: "{{ route('change.status.image') }}",
+                    url: "{{ route('change.status.pengumuman') }}",
                     type: "POST",
                     enctype: 'multipart/form-data',
                     dataType: 'json',
                     success: function(data) {
                         setTimeout(function() {
                             $('#modal-change').modal('hide');
-                            location.replace("{{ route('image.index') }}")
+                            location.replace("{{ route('pengumuman.index') }}")
                         }, 2200);
                     },
                     error: function(data) {
@@ -187,14 +171,14 @@
                     processData: false,
                     contentType: false,
                     data: formdata,
-                    url: "{{ route('image.destroy') }}",
+                    url: "{{ route('pengumuman.destroy') }}",
                     type: "POST",
                     enctype: 'multipart/form-data',
                     dataType: 'json',
                     success: function(data) {
                         setTimeout(function() {
                             $('#modal-delete').modal('hide');
-                            location.replace("{{ route('image.index') }}")
+                            location.replace("{{ route('pengumuman.index') }}")
                         }, 2200);
                     },
                     error: function(data) {
@@ -224,7 +208,7 @@
                         processData: false,
                         contentType: false,
                         data: formdata,
-                        url: "{{ route('image.store') }}",
+                        url: "{{ route('pengumuman.store') }}",
                         type: "POST",
                         enctype: 'multipart/form-data',
                         dataType: 'json',
@@ -232,7 +216,7 @@
                             setTimeout(function() {
                                 $('#modal_cu').modal('hide');
                                 location.replace(
-                                    "{{ route('image.index') }}"
+                                    "{{ route('pengumuman.index') }}"
                                 )
                             }, 2200);
                         },
@@ -253,7 +237,7 @@
                         processData: false,
                         contentType: false,
                         data: data,
-                        url: "{{ route('image.update') }}",
+                        url: "{{ route('pengumuman.update') }}",
                         type: "POST",
                         enctype: 'multipart/form-data',
                         dataType: 'json',
@@ -261,7 +245,7 @@
                             setTimeout(function() {
                                 $('#modal_cu').modal('hide');
                                 location.replace(
-                                    "{{ route('image.index') }}"
+                                    "{{ route('pengumuman.index') }}"
                                 )
                             }, 2200);
                         },

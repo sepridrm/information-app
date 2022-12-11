@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Information;
 use App\Http\Controllers\Controller;
 use App\Models\VideoInformation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class VideoInformationController extends Controller
 {
@@ -41,7 +43,7 @@ class VideoInformationController extends Controller
     {
         if ($request->ajax()) {
             $extention = $request->file("file")->getClientOriginalExtension();
-            $nama_file = $request->name.".".$extention;
+            $nama_file = $request->name.Carbon::now()->timestamp.".".$extention;
 
             $new = new VideoInformation();
             $new->nama = $request->name;
@@ -88,7 +90,7 @@ class VideoInformationController extends Controller
             $update->nama = $request->name;
             if ($request->file("file") != "") {
                 $extention = $request->file("file")->getClientOriginalExtension();
-                $nama_file = $request->name.".".$extention;
+                $nama_file = $request->name.Carbon::now()->timestamp.".".$extention;
 
                 Storage::delete($update->path);
                 $newPath = $request->file("file")->storeAs("public/video/", $nama_file);
@@ -103,7 +105,7 @@ class VideoInformationController extends Controller
     public function change_status(Request $request)
     {
         if ($request->ajax()) {
-            $status = VideoInformation::find($request->id_change);
+            $status = VideoInformation::find($request->id);
             $status->aktif = $request->st;
             $status->save();
 
@@ -121,8 +123,8 @@ class VideoInformationController extends Controller
     {
         if ($request->ajax()) {
             $view = VideoInformation::find($request->id);
-            Storage::delete($view->file);
-            Arsip::destroy($request->id);
+            Storage::delete($view->path);
+            VideoInformation::destroy($request->id);
 
             return response()->json(['success' => 'Data berhasil dihapus']);
         }
