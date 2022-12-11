@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Welcome;
 use App\Models\VideoInformation;
+use App\Models\ImageInformation;
 use App\Models\Pengumuman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -18,13 +19,15 @@ class IndexController extends Controller
     public function index()
     {
         $schedule = Http::get('https://api.banghasan.com/sholat/format/json/jadwal/kota/613/tanggal/'.date("Y-m-d"))->json()['jadwal']['data'];
-        $video = VideoInformation::first();
+        $video = VideoInformation::where('aktif', '1')->get();
         $welcome = Welcome::first();
-        $pengumuman = Pengumuman::first();
+        $image = Imageinformation::where('aktif', '1')->get();
+        $pengumuman = Pengumuman::where('aktif', '1')->get();
         
         return view('welcome', compact(
             'welcome',
             'video',
+            'image',
             'pengumuman',
             'schedule'
         ));

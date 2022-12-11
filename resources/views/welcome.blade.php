@@ -26,28 +26,40 @@
                 </div>
 
                 <div class="row mt-2">
-                    <marquee scrolldelay="100" class="d-flex bg-success p-2">
-                        <h5 class="mb-0 bg-success m-0">{{ $welcome->isi ?? 'Selamat Datang' }}</h5>
+                    <marquee scrolldelay="100" class="d-flex bg-info p-2">
+                        <h5 class="mb-0">{{ $welcome->isi ?? 'Selamat Datang' }}</h5>
                     </marquee>
                 </div>
 
                 <div class="row">
                     @if (!$video->count() == 0)
-                        <video id="video" autoplay loop style="width: 100%; margin: 0">
-                            <source src="{{ asset('storage') }}/{{ substr($video->path, 7) }}" type="video/mp4">
+                        <video id="videoInformasi" style="width: 100%; margin: 0">
+                            <source src="{{ asset('storage') }}{{ substr($video[1]->path, 6) }}" type="video/mp4">
                         </video>
                     @endif
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-4 col-4 d-flex flex-column align-items-center justify-content-center bg-info">
+                    <div class="col-lg-4 col-4 d-flex flex-column align-items-center justify-content-center bg-warning">
                             {{ \Carbon\Carbon::parse(\Carbon\Carbon::now())->translatedFormat('l, d F Y') }}<span
                                 id="jam" style="font-size:24"></span>
                     </div>
-                    <div class="col-lg-8 col-8 text-center bg-success py-2 px-0">
-                        <marquee scrolldelay="100">
-                            <h4 class="mb-0">{{ $pengumuman->isi ?? 'Pengumuman' }}</h4>
-                        </marquee>
+                    <div class="col-lg-8 col-8 text-center bg-success py-3 px-0">
+                        <div class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach ($pengumuman as $item)
+                                    @if($loop->index == 0)
+                                        <div class="carousel-item active">
+                                            <h4 class="mb-0">{{ $item->isi }}</h4>
+                                        </div>
+                                    @else
+                                        <div class="carousel-item">
+                                            <h4 class="mb-0">{{ $item->isi }}</h4>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -78,15 +90,17 @@
 
                 <div class="carousel slide mt-2" data-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img class="img-fluid w-100" src="img/slide2.jpeg" alt="First slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="img-fluid w-100" src="img/slide2.jpeg" alt="Second slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="img-fluid w-100" src="img/slide2.jpeg" alt="Third slide">
-                        </div>
+                        @foreach ($image as $item)
+                            @if($loop->index == 0)
+                                <div class="carousel-item active">
+                                    <img class="img-fluid w-100" src="{{ asset('storage') }}{{ substr($item->path, 6) }}">
+                                </div>
+                            @else
+                                <div class="carousel-item">
+                                    <img class="img-fluid w-100" src="{{ asset('storage') }}{{ substr($item->path, 6) }}">
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -107,8 +121,12 @@
     </div>
 
     <script type="text/javascript">
-        var video = document.getElementById("video");
+        var videoInformasi = document.getElementById("videoInformasi");
         var notifVideo = document.getElementById("notifVideo");
+
+        var videos = {!! json_encode($video) !!};
+        var videoUrl = {!! json_encode(asset('storage')) !!};
+        var videoActive = 0;
 
         var schedule = {!! json_encode($schedule) !!};
         delete schedule.tanggal;
@@ -119,7 +137,8 @@
         for (var key in schedule) {
             var temp = {
                 nama: key[0].toUpperCase() + key.slice(1),
-                jam: key === "dzuhur" ? "12:36:20" : schedule[key] + ":00"
+                jam: schedule[key] + ":00",
+                // jam: key === "dzuhur" ? "12:36:20" : schedule[key] + ":00"
             }
             arrSchedule.push(temp)
         }
@@ -128,6 +147,7 @@
         window.onload = function() {
             setJam();
             onHideNotif();
+            playVideo(videoUrl+videos[videoActive].path.substring(6));
         }
 
         function setJam() {
@@ -158,22 +178,34 @@
             $('#notifModal').modal('hide');
         });
 
+        videoInformasi.addEventListener('ended',function(e){
+            videoActive++;
+            if(videoActive > videos.length-1)
+                videoActive=0
+            playVideo(videoUrl+videos[videoActive].path.substring(6));
+        });
+
         document.addEventListener('keydown', function(e){
             if(e.key === "Escape")
                 $(".hidden").show()
         })
 
+        function playVideo(url) {
+            videoInformasi.src = url;
+            videoInformasi.play();
+        }
+
         function showNotif(title = null){
             $("#notifModal").modal()
             $("#notifTitle").text(title)
-            video.pause()
+            videoInformasi.pause()
             notifVideo.play()
         }
 
         function onHideNotif(){
             $('#notifModal').on('hidden.bs.modal', function () {
                 notifVideo.pause()
-                video.play()
+                videoInformasi.play()
             });
         }
 
