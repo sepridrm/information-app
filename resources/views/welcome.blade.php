@@ -6,7 +6,7 @@
     <div class="wrapper bg-white d-flex align-items-center justify-content-center overflow-hidden">
         <div class="row">
             <div class="col-lg-8 col-8 pt-1">
-                <div class="row">
+                <div class="row" style="height: 8.3vh">
                     <div class="col-lg-1 col-1 text-center">
                         <img class="img-fluid" src="vendor/adminlte/dist/img/merinem.png" style="width: 55px; height: 55px;">
                     </div>
@@ -17,7 +17,7 @@
                                 <h4 class="mb-0">BPKAD Muara Enim</h4>
                             </div>
                             <div class="col-lg-9 col-9 px-0">
-                                <marquee class="mb-0">
+                                <marquee class="mb-0 h3">
                                     Jadwal sholat hari ini {{ $schedule['tanggal'] }} untuk wilayah Kab. Muara Enim,
                                     <strong>Subuh: {{ $schedule['subuh'] }} WIB</strong> | <strong>Dzuhur:
                                         {{ $schedule['dzuhur'] }} WIB</strong> | <strong>Ashar: {{ $schedule['ashar'] }}
@@ -29,13 +29,13 @@
                     </div>
                 </div>
 
-                <div class="row mt-2">
-                    <marquee scrolldelay="100" class="d-flex bg-info p-2">
-                        <h5 class="mb-0">{{ $welcome->isi ?? 'Selamat Datang' }}</h5>
+                <div class="row" style="height: 11.5vh;">
+                    <marquee scrolldelay="100" class="d-flex bg-info px-2 py-5">
+                        <h2 class="mb-0">{{ $welcome->isi ?? 'Selamat Datang' }}</h2>
                     </marquee>
                 </div>
 
-                <div class="row">
+                <div class="row" style="height: 67vh;">
                     @if (!$video->count() == 0)
                         <video id="videoInformasi" style="width: 100%; margin: 0">
                             {{-- <source src="{{ asset('storage') }}{{ substr($video[1]->path, 6) }}" type="video/mp4"> --}}
@@ -43,22 +43,23 @@
                     @endif
                 </div>
 
-                <div class="row">
-                    <div class="col-lg-4 col-4 d-flex flex-column align-items-center justify-content-center bg-warning">
+                <div class="row" style="height: 11.8vh">
+                    <div
+                        class="col-lg-4 col-4 d-flex flex-column py-1 align-items-center justify-content-center bg-warning h3">
                         {{ \Carbon\Carbon::parse(\Carbon\Carbon::now())->translatedFormat('l, d F Y') }}<span id="jam"
                             style="font-size:24"></span>
                     </div>
-                    <div class="col-lg-8 col-8 text-center bg-success py-3 px-0">
+                    <div class="col-lg-8 col-8 text-center bg-success py-1 px-0">
                         <div class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner px-2">
+                            <div class="carousel-inner px-2 py-5">
                                 @foreach ($pengumuman as $item)
                                     @if ($loop->index == 0)
                                         <div class="carousel-item active">
-                                            <h5 class="mb-0">{{ $item->isi }}</h5>
+                                            <h3 class="mb-0">{{ $item->isi }}</h3>
                                         </div>
                                     @else
                                         <div class="carousel-item">
-                                            <h5 class="mb-0">{{ $item->isi }}</h5>
+                                            <h3 class="mb-0">{{ $item->isi }}</h3>
                                         </div>
                                     @endif
                                 @endforeach
