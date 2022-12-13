@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'Data Gambar Informasi')
+@section('title', 'Data Pegawai')
 
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1>Gambar Informasi</h1>
+            <h1>Pegawai</h1>
         </div>
     </div>
 @stop
@@ -33,7 +33,10 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Judul</th>
+                                <th>Nama</th>
+                                <th>Jabatan</th>
+                                <th>Pangkat</th>
+                                <th>Golongan</th>
                                 <th>Gambar</th>
                                 <th>Aksi</th>
                             </tr>
@@ -43,34 +46,30 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->nama }}</td>
+                                    <td>{{ $item->jabatan }}</td>
+                                    <td>{{ $item->pangkat_pegawai->pangkat->nama }}</td>
+                                    <td>{{ $item->pangkat_pegawai->pangkat->golongan }}</td>
                                     <td>
-                                        @if ($item->path != '')
+                                        @if ($item->foto != '')
                                             <img width="100px" height="100px"
-                                                src="{{ asset('storage') }}/{{ substr($item->path, 7) }}" />
+                                                src="{{ asset('storage') }}/{{ substr($item->foto, 7) }}" />
                                         @else
                                             <img width="100px" height="100px" src="{{ asset('img/default.jpg') }}" />
                                         @endif
                                     </td>
                                     <td>
                                         <a href="javascript:;"
+                                            class="btn btn-sm btn-primary btn-round btn-icon d-inline-block"
+                                            id="pangkat-item" data-id="{{ $item->id }}" data-nama="{{ $item->nama }}"
+                                            data-jabatan="{{ $item->jabatan }}" data-foto="{{ substr($item->foto, 16) }}"
+                                            title="Pangkat">Naik Pangkat</a>
+
+                                        <a href="javascript:;"
                                             class="btn btn-sm btn-warning btn-round btn-icon d-inline-block"
                                             id="update-item" data-title="update" data-id="{{ $item->id }}"
-                                            data-nama="{{ $item->nama }}" data-path="{{ substr($item->path, 14) }}"
-                                            title="Edit"><i class="fas fa-edit"></i></a>
-
-                                        @if ($item->aktif == 1)
-                                            <a href="javascript:;" id="change-item" class="btn btn-sm btn-success"
-                                                data-id="{{ $item->id }}" data-st="0" data-status="Tidak Aktif"
-                                                data-nama="{{ $item->nama }}" data-title="Change data">
-                                                Aktif
-                                            </a>
-                                        @else
-                                            <a href="javascript:;" id="change-item" class="btn btn-sm btn-danger"
-                                                data-id="{{ $item->id }}" data-st="1" data-status="Aktif"
-                                                data-nama="{{ $item->nama }}" data-title="Change data">
-                                                Tidak Aktif
-                                            </a>
-                                        @endif
+                                            data-nama="{{ $item->nama }}" data-jabatan="{{ $item->jabatan }}"
+                                            data-foto="{{ substr($item->foto, 16) }}" title="Edit"><i
+                                                class="fas fa-edit"></i></a>
 
                                         <a href="javascript:;" id="delete-item" class="btn btn-sm btn-danger"
                                             data-id="{{ $item->id }}" data-nama="{{ $item->nama }}"
@@ -114,6 +113,25 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label for="jabatan">Jabatan</label>
+                                    <input type="text" name="jabatan" class="form-control" id="jabatan"
+                                        placeholder="Jabatan">
+                                    <div class="invalid-feedback error-name"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" id="pangkat">
+                                <div class="form-group">
+                                    <label for="pangkat">Pangkat</label>
+                                    <select name="pangkat" class="form-control" style="width:100%;">
+                                        <option value="">Pilih Pangkat</option>
+                                        @foreach ($pangkat as $item)
+                                            <option value='{{ $item->id }}'>{{ $item->nama ?? '' }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="image">Gambar</label>
                                     <input type="text" class="form-control mb-3" id="nama_file" name="nama_file"
                                         disabled>
@@ -143,7 +161,7 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('js/modal-show-image.js') }}"></script>
+    <script src="{{ asset('js/modal-show-pegawai.js') }}"></script>
 
     <!-- change -->
     <script type="text/javascript">
