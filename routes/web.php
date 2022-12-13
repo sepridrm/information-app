@@ -48,10 +48,11 @@ Route::group(['namespace' => 'App\Http\Controllers', 'middleware' => 'auth'], fu
         Route::patch('', 'WelcomeController@update')->name('welcome.update');
     });
     Route::group(['prefix' => 'pegawai'], function(){
-        Route::get('', 'PegawaiController@index')->name('image.index');
-        Route::post('', 'PegawaiController@store')->name('image.store');
-        Route::patch('', 'PegawaiController@update')->name('image.update');
-        Route::patch('/change', 'PegawaiController@change_status')->name('change.status.image');
-        Route::delete('', 'PegawaiController@destroy')->name('image.destroy');
+        Route::get('', 'PegawaiController@index')->name('pegawai.index');
+        Route::post('', 'PegawaiController@store')->name('pegawai.store');
+        Route::post('pangkat', 'PegawaiController@pangkat')->name('pegawai.pangkat');
+        Route::patch('', 'PegawaiController@update')->name('pegawai.update');
+        Route::patch('/change', 'PegawaiController@change_status')->name('change.status.pegawai');
+        Route::delete('', 'PegawaiController@destroy')->name('pegawai.destroy');
     });
 });

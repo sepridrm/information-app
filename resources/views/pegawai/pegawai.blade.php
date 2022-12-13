@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="card card-outline card-warning">
                 <div class="card-header">
-                    <h3 class="card-title">Master {{ __('sidebar.image') }}
+                    <h3 class="card-title">Master {{ __('sidebar.pegawai') }}
                         <button type="button" class="btn btn-success btn-sm btnTambah" id="create-item"
                             data-title="create">Tambah</button>
                     </h3>
@@ -60,9 +60,10 @@
                                     <td>
                                         <a href="javascript:;"
                                             class="btn btn-sm btn-primary btn-round btn-icon d-inline-block"
-                                            id="pangkat-item" data-id="{{ $item->id }}" data-nama="{{ $item->nama }}"
-                                            data-jabatan="{{ $item->jabatan }}" data-foto="{{ substr($item->foto, 16) }}"
-                                            title="Pangkat">Naik Pangkat</a>
+                                            id="pangkat-item" data-id="{{ $item->id }}"
+                                            data-id_pangkat="{{ $item->pangkat_pegawai->pangkat->id }}"
+                                            title="Pangkat">Naik
+                                            Pangkat</a>
 
                                         <a href="javascript:;"
                                             class="btn btn-sm btn-warning btn-round btn-icon d-inline-block"
@@ -89,6 +90,7 @@
     </div>
     @include('modals.change')
     @include('modals.delete')
+    @include('pegawai.pangkat')
     <!-- Modal -->
     <div class="modal fade" id="modal_cu">
         <div class="modal-dialog modal-lg">
@@ -132,7 +134,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="image">Gambar</label>
+                                    <label for="pegawai">Gambar</label>
                                     <input type="text" class="form-control mb-3" id="nama_file" name="nama_file"
                                         disabled>
                                     <div class="input-group">
@@ -163,6 +165,42 @@
 @push('js')
     <script src="{{ asset('js/modal-show-pegawai.js') }}"></script>
 
+    <!-- pangkat -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#pangkatsimpan').click(function(e) {
+                e.preventDefault();
+                $(this).html('Proses Simpan..');
+                $('#pangkatsimpan').attr("disabled", true);
+                var form = $('#pangkatForm')[0];
+                var formdata = new FormData(form);
+                $.ajax({
+                    processData: false,
+                    contentType: false,
+                    data: formdata,
+                    url: "{{ route('pegawai.pangkat') }}",
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    dataType: 'json',
+                    success: function(data) {
+                        setTimeout(function() {
+                            $('#modal-pangkat').modal('hide');
+                            location.replace("{{ route('pegawai.index') }}")
+                        }, 2200);
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                        jQuery('.alert-danger').hide();
+                        setTimeout(function() {
+                            $('#pangkatsimpan').html('Simpan');
+                            $('#pangkatsimpan').attr("disabled", false);
+                        }, 2200);
+                    }
+                });
+            });
+        });
+    </script>
+
     <!-- change -->
     <script type="text/javascript">
         $(document).ready(function() {
@@ -176,14 +214,14 @@
                     processData: false,
                     contentType: false,
                     data: formdata,
-                    url: "{{ route('change.status.image') }}",
+                    url: "{{ route('change.status.pegawai') }}",
                     type: "POST",
                     enctype: 'multipart/form-data',
                     dataType: 'json',
                     success: function(data) {
                         setTimeout(function() {
                             $('#modal-change').modal('hide');
-                            location.replace("{{ route('image.index') }}")
+                            location.replace("{{ route('pegawai.index') }}")
                         }, 2200);
                     },
                     error: function(data) {
@@ -212,14 +250,14 @@
                     processData: false,
                     contentType: false,
                     data: formdata,
-                    url: "{{ route('image.destroy') }}",
+                    url: "{{ route('pegawai.destroy') }}",
                     type: "POST",
                     enctype: 'multipart/form-data',
                     dataType: 'json',
                     success: function(data) {
                         setTimeout(function() {
                             $('#modal-delete').modal('hide');
-                            location.replace("{{ route('image.index') }}")
+                            location.replace("{{ route('pegawai.index') }}")
                         }, 2200);
                     },
                     error: function(data) {
@@ -249,7 +287,7 @@
                         processData: false,
                         contentType: false,
                         data: formdata,
-                        url: "{{ route('image.store') }}",
+                        url: "{{ route('pegawai.store') }}",
                         type: "POST",
                         enctype: 'multipart/form-data',
                         dataType: 'json',
@@ -257,7 +295,7 @@
                             setTimeout(function() {
                                 $('#modal_cu').modal('hide');
                                 location.replace(
-                                    "{{ route('image.index') }}"
+                                    "{{ route('pegawai.index') }}"
                                 )
                             }, 2200);
                         },
@@ -278,7 +316,7 @@
                         processData: false,
                         contentType: false,
                         data: data,
-                        url: "{{ route('image.update') }}",
+                        url: "{{ route('pegawai.update') }}",
                         type: "POST",
                         enctype: 'multipart/form-data',
                         dataType: 'json',
@@ -286,7 +324,7 @@
                             setTimeout(function() {
                                 $('#modal_cu').modal('hide');
                                 location.replace(
-                                    "{{ route('image.index') }}"
+                                    "{{ route('pegawai.index') }}"
                                 )
                             }, 2200);
                         },

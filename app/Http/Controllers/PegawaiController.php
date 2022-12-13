@@ -64,6 +64,17 @@ class PegawaiController extends Controller
             return response()->json(['success' => 'Data berhasil ditambah']);
         }
     }
+    public function pangkat(Request $request)
+    {
+        if ($request->ajax()) {
+            $pangkat = new PangkatPegawai();
+            $pangkat->id_pegawai = $request->id;
+            $pangkat->id_pangkat = $request->pangkat;
+            $pangkat->save();
+
+            return response()->json(['success' => 'Pangkat Berhasil Disimpan']);
+        }
+    }
 
     /**
      * Display the specified resource.

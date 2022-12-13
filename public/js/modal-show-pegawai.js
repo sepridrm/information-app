@@ -55,4 +55,27 @@ $(function () {
         $('.delete-item-trigger-clicked').removeClass('delete-item-trigger-clicked')
         $("#modal-delete").trigger("reset");
     })
+
+    $(document).on('click', "#pangkat-item", function () {
+        $(this).addClass('pangkat-item-trigger-clicked');
+        $('#modal-pangkat').modal('show')
+    })
+    $('#modal-pangkat').on('show.bs.modal', function () {
+        var el = $(".pangkat-item-trigger-clicked");
+
+        var id = el.data('id');
+        var id_pangkat = el.data('id_pangkat');
+        
+        $("#modal-pangkat #id").val(id);
+        $("#modal-pangkat #pangkat").val(id_pangkat).change();
+        $('#modal-pangkat #pangkat option').each(function() {
+            if ($(this).val() <= id_pangkat) {
+                $(this).attr("disabled", true);
+            }
+        });
+    })
+    $('#modal-pangkat').on('hide.bs.modal', function () {
+        $('.pangkat-item-trigger-clicked').removeClass('pangkat-item-trigger-clicked')
+        $("#modal-pangkat").trigger("reset");
+    })
 })
