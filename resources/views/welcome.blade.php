@@ -12,7 +12,7 @@
                         <img class="img-fluid" src="vendor/adminlte/dist/img/merinem.png" style="width: 55px; height: 55px;">
                     </div>
 
-                    <div class="col-lg-11 col-11 d-flex align-items-center justify-content-center">
+                    <div class="col-lg-11 col-11 d-flex align-items-center justify-content-center pr-0">
                         <div class="row">
                             <div class="col-lg-3 col-3">
                                 <h4 class="mb-0">BPKAD Muara Enim</h4>
@@ -68,7 +68,7 @@
             </div>
 
             <div class="col-lg-4 col-4">
-                <div class="row">
+                <div class="row pl-1">
                     <div class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner" style="height: 50vh">
                             <div class="carousel-item active h-100">
@@ -84,7 +84,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row pl-1">
                     <div class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner" style="height: 50vh">
                             @foreach ($image as $item)
