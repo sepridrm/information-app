@@ -21,7 +21,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'middleware' => 'auth'], fu
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::group(['namespace' => 'Information'], function () {
-        Route::group(['prefix' => 'video'], function(){
+        Route::group(['prefix' => 'videos'], function(){
             Route::get('', 'VideoInformationController@index')->name('video.index');
             Route::post('', 'VideoInformationController@store')->name('video.store');
             Route::patch('', 'VideoInformationController@update')->name('video.update');
@@ -46,5 +46,13 @@ Route::group(['namespace' => 'App\Http\Controllers', 'middleware' => 'auth'], fu
     Route::group(['prefix' => 'welcome'], function(){
         Route::get('', 'WelcomeController@index')->name('welcome.index');
         Route::patch('', 'WelcomeController@update')->name('welcome.update');
+    });
+    Route::group(['prefix' => 'pegawai'], function(){
+        Route::get('', 'PegawaiController@index')->name('pegawai.index');
+        Route::post('', 'PegawaiController@store')->name('pegawai.store');
+        Route::post('pangkat', 'PegawaiController@pangkat')->name('pegawai.pangkat');
+        Route::patch('', 'PegawaiController@update')->name('pegawai.update');
+        Route::patch('/change', 'PegawaiController@change_status')->name('change.status.pegawai');
+        Route::delete('', 'PegawaiController@destroy')->name('pegawai.destroy');
     });
 });

@@ -50,8 +50,7 @@
                                                     type="video/mp4">
                                             </video>
                                         @else
-                                            <img width="100px" height="100px"
-                                                src="{{ asset('storage/assets/default.jpg') }}" />
+                                            <img width="100px" height="100px" src="{{ asset('img/default.jpg') }}" />
                                         @endif
                                     </td>
                                     <td>

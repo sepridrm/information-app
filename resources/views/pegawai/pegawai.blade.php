@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'Data Gambar Informasi')
+@section('title', 'Data Pegawai')
 
 @section('content_header')
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1>Gambar Informasi</h1>
+            <h1>Pegawai</h1>
         </div>
     </div>
 @stop
@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="card card-outline card-warning">
                 <div class="card-header">
-                    <h3 class="card-title">Master {{ __('sidebar.image') }}
+                    <h3 class="card-title">Master {{ __('sidebar.pegawai') }}
                         <button type="button" class="btn btn-success btn-sm btnTambah" id="create-item"
                             data-title="create">Tambah</button>
                     </h3>
@@ -33,7 +33,10 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Judul</th>
+                                <th>Nama</th>
+                                <th>Jabatan</th>
+                                <th>Pangkat</th>
+                                <th>Golongan</th>
                                 <th>Gambar</th>
                                 <th>Aksi</th>
                             </tr>
@@ -43,34 +46,31 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->nama }}</td>
+                                    <td>{{ $item->jabatan }}</td>
+                                    <td>{{ $item->pangkat_pegawai->pangkat->nama }}</td>
+                                    <td>{{ $item->pangkat_pegawai->pangkat->golongan }}</td>
                                     <td>
-                                        @if ($item->path != '')
+                                        @if ($item->foto != '')
                                             <img width="100px" height="100px"
-                                                src="{{ asset('storage') }}/{{ substr($item->path, 7) }}" />
+                                                src="{{ asset('storage') }}/{{ substr($item->foto, 7) }}" />
                                         @else
                                             <img width="100px" height="100px" src="{{ asset('img/default.jpg') }}" />
                                         @endif
                                     </td>
                                     <td>
                                         <a href="javascript:;"
+                                            class="btn btn-sm btn-primary btn-round btn-icon d-inline-block"
+                                            id="pangkat-item" data-id="{{ $item->id }}"
+                                            data-id_pangkat="{{ $item->pangkat_pegawai->pangkat->id }}"
+                                            title="Pangkat">Naik
+                                            Pangkat</a>
+
+                                        <a href="javascript:;"
                                             class="btn btn-sm btn-warning btn-round btn-icon d-inline-block"
                                             id="update-item" data-title="update" data-id="{{ $item->id }}"
-                                            data-nama="{{ $item->nama }}" data-path="{{ substr($item->path, 14) }}"
-                                            title="Edit"><i class="fas fa-edit"></i></a>
-
-                                        @if ($item->aktif == 1)
-                                            <a href="javascript:;" id="change-item" class="btn btn-sm btn-success"
-                                                data-id="{{ $item->id }}" data-st="0" data-status="Tidak Aktif"
-                                                data-nama="{{ $item->nama }}" data-title="Change data">
-                                                Aktif
-                                            </a>
-                                        @else
-                                            <a href="javascript:;" id="change-item" class="btn btn-sm btn-danger"
-                                                data-id="{{ $item->id }}" data-st="1" data-status="Aktif"
-                                                data-nama="{{ $item->nama }}" data-title="Change data">
-                                                Tidak Aktif
-                                            </a>
-                                        @endif
+                                            data-nama="{{ $item->nama }}" data-jabatan="{{ $item->jabatan }}"
+                                            data-foto="{{ substr($item->foto, 16) }}" title="Edit"><i
+                                                class="fas fa-edit"></i></a>
 
                                         <a href="javascript:;" id="delete-item" class="btn btn-sm btn-danger"
                                             data-id="{{ $item->id }}" data-nama="{{ $item->nama }}"
@@ -90,6 +90,7 @@
     </div>
     @include('modals.change')
     @include('modals.delete')
+    @include('pegawai.pangkat')
     <!-- Modal -->
     <div class="modal fade" id="modal_cu">
         <div class="modal-dialog modal-lg">
@@ -114,7 +115,26 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="image">Gambar</label>
+                                    <label for="jabatan">Jabatan</label>
+                                    <input type="text" name="jabatan" class="form-control" id="jabatan"
+                                        placeholder="Jabatan">
+                                    <div class="invalid-feedback error-name"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" id="pangkat">
+                                <div class="form-group">
+                                    <label for="pangkat">Pangkat</label>
+                                    <select name="pangkat" class="form-control" style="width:100%;">
+                                        <option value="">Pilih Pangkat</option>
+                                        @foreach ($pangkat as $item)
+                                            <option value='{{ $item->id }}'>{{ $item->nama ?? '' }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="pegawai">Gambar</label>
                                     <input type="text" class="form-control mb-3" id="nama_file" name="nama_file"
                                         disabled>
                                     <div class="input-group">
@@ -143,7 +163,43 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('js/modal-show-image.js') }}"></script>
+    <script src="{{ asset('js/modal-show-pegawai.js') }}"></script>
+
+    <!-- pangkat -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#pangkatsimpan').click(function(e) {
+                e.preventDefault();
+                $(this).html('Proses Simpan..');
+                $('#pangkatsimpan').attr("disabled", true);
+                var form = $('#pangkatForm')[0];
+                var formdata = new FormData(form);
+                $.ajax({
+                    processData: false,
+                    contentType: false,
+                    data: formdata,
+                    url: "{{ route('pegawai.pangkat') }}",
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    dataType: 'json',
+                    success: function(data) {
+                        setTimeout(function() {
+                            $('#modal-pangkat').modal('hide');
+                            location.replace("{{ route('pegawai.index') }}")
+                        }, 2200);
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                        jQuery('.alert-danger').hide();
+                        setTimeout(function() {
+                            $('#pangkatsimpan').html('Simpan');
+                            $('#pangkatsimpan').attr("disabled", false);
+                        }, 2200);
+                    }
+                });
+            });
+        });
+    </script>
 
     <!-- change -->
     <script type="text/javascript">
@@ -158,14 +214,14 @@
                     processData: false,
                     contentType: false,
                     data: formdata,
-                    url: "{{ route('change.status.image') }}",
+                    url: "{{ route('change.status.pegawai') }}",
                     type: "POST",
                     enctype: 'multipart/form-data',
                     dataType: 'json',
                     success: function(data) {
                         setTimeout(function() {
                             $('#modal-change').modal('hide');
-                            location.replace("{{ route('image.index') }}")
+                            location.replace("{{ route('pegawai.index') }}")
                         }, 2200);
                     },
                     error: function(data) {
@@ -194,14 +250,14 @@
                     processData: false,
                     contentType: false,
                     data: formdata,
-                    url: "{{ route('image.destroy') }}",
+                    url: "{{ route('pegawai.destroy') }}",
                     type: "POST",
                     enctype: 'multipart/form-data',
                     dataType: 'json',
                     success: function(data) {
                         setTimeout(function() {
                             $('#modal-delete').modal('hide');
-                            location.replace("{{ route('image.index') }}")
+                            location.replace("{{ route('pegawai.index') }}")
                         }, 2200);
                     },
                     error: function(data) {
@@ -231,7 +287,7 @@
                         processData: false,
                         contentType: false,
                         data: formdata,
-                        url: "{{ route('image.store') }}",
+                        url: "{{ route('pegawai.store') }}",
                         type: "POST",
                         enctype: 'multipart/form-data',
                         dataType: 'json',
@@ -239,7 +295,7 @@
                             setTimeout(function() {
                                 $('#modal_cu').modal('hide');
                                 location.replace(
-                                    "{{ route('image.index') }}"
+                                    "{{ route('pegawai.index') }}"
                                 )
                             }, 2200);
                         },
@@ -260,7 +316,7 @@
                         processData: false,
                         contentType: false,
                         data: data,
-                        url: "{{ route('image.update') }}",
+                        url: "{{ route('pegawai.update') }}",
                         type: "POST",
                         enctype: 'multipart/form-data',
                         dataType: 'json',
@@ -268,7 +324,7 @@
                             setTimeout(function() {
                                 $('#modal_cu').modal('hide');
                                 location.replace(
-                                    "{{ route('image.index') }}"
+                                    "{{ route('pegawai.index') }}"
                                 )
                             }, 2200);
                         },

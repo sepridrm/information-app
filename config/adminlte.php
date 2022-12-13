@@ -334,7 +334,7 @@ return [
         ],
         [
             'text'        => 'Video informasi',
-            'url'         => 'video',
+            'url'         => 'videos',
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
         ],
