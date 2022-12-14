@@ -12,14 +12,16 @@
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3 id="item-count">400</h3>
+                    <h3 id="item-count">
+                        {{ $pegawai }}
+                    </h3>
 
-                    <p>{{ __('sidebar.item') }}</p>
+                    <p>Jumlah pegawai</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-archive"></i>
+                    <i class="fas fa-user"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
             </div>
         </div>
         <!-- ./col -->
@@ -28,15 +30,15 @@
             <div class="small-box bg-success">
                 <div class="inner">
                     <h3 id="supplier-count">
-                        500
+                        {{ $video }}
                     </h3>
 
-                    <p>{{ __('sidebar.supplier') }}</p>
+                    <p>Video informasi aktif</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-people-carry"></i>
+                    <i class="fas fa-video"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
             </div>
         </div>
         <!-- ./col -->
@@ -45,14 +47,14 @@
             <div class="small-box bg-warning">
                 <div class="inner">
                     <h3 id="customer-count">
-                        1000
+                        {{ $image }}
                     </h3>
-                    <p>{{ __('sidebar.customer') }}</p>
+                    <p>Gambar informasi aktif</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-user-tie"></i>
+                    <i class="fas fa-image"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
             </div>
         </div>
         <!-- ./col -->
@@ -61,15 +63,15 @@
             <div class="small-box bg-danger">
                 <div class="inner">
                     <h3 id="salesperson-count">
-                        10
+                        {{ $pengumuman }}
                     </h3>
 
-                    <p>{{ __('sidebar.salesperson') }}</p>
+                    <p>Pengumuman aktif</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-child"></i>
+                    <i class="fas fa-bullhorn"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                {{-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> --}}
             </div>
         </div>
         <!-- ./col -->

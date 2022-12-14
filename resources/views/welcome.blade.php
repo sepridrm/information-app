@@ -48,7 +48,7 @@
                             <h4 class="mb-0" id="jam"></h4>
                     </div>
                     <div class="col-lg-8 col-8 d-flex align-items-center justify-content-center bg-success">
-                        <div class="carousel slide" data-ride="carousel">
+                        <div class="carousel slide" data-ride="carousel" data-interval="4000">
                             <div class="carousel-inner px-2">
                                 @foreach ($pengumuman as $item)
                                     @if($loop->index == 0)
@@ -68,33 +68,54 @@
             </div>
 
             <div class="col-lg-4 col-4">
-                <div class="row pl-1">
-                    <div class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner" style="height: 50vh">
-                            <div class="carousel-item active h-100">
-                                <img class="img-fluid h-100 w-100" src="img/slide1.jpeg" alt="First slide">
-                            </div>
-                            <div class="carousel-item h-100">
-                                <img class="img-fluid h-100 w-100" src="img/slide1.jpeg" alt="Second slide">
-                            </div>
-                            <div class="carousel-item h-100">
-                                <img class="img-fluid h-100 w-100" src="img/slide1.jpeg" alt="Third slide">
-                            </div>
+                <div class="row pl-1 mb-1">
+                    <div class="carousel slide bg-secondary" data-ride="carousel" data-interval="3000">
+                        <h4 class="text-center mt-3">Pegawai BPKAD Muara Enim</h4>
+                        <div class="carousel-inner" style="height: 47.5vh">
+                            @foreach ($pegawai as $item)
+                                    @if($loop->index == 0)
+                                        <div class="carousel-item active">
+                                            <div class="d-flex flex-column align-items-center py-3">
+                                                @if ($item->foto != '')
+                                                    <img class="border rounded" width="45%" height="45%"
+                                                    src="{{ asset('storage') }}/{{ substr($item->foto, 7) }}" />
+                                                @else
+                                                    <img class="border rounded" width="45%" height="45%" src="{{ asset('img/default.jpg') }}" />
+                                                @endif
+                                                <h4 class="mb-0 mt-1">{{ $item->nama }}</h4>
+                                                <h5 class="mb-0">{{ $item->jabatan }} ({{ $item->pangkat_pegawai->pangkat->nama }} {{ $item->pangkat_pegawai->pangkat->golongan }})</h5>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="carousel-item">
+                                            <div class="d-flex flex-column align-items-center py-3">
+                                                @if ($item->foto != '')
+                                                    <img class="border rounded" width="45%" height="45%"
+                                                    src="{{ asset('storage') }}/{{ substr($item->foto, 7) }}" />
+                                                @else
+                                                    <img class="border rounded" width="45%" height="45%" src="{{ asset('img/default.jpg') }}" />
+                                                @endif
+                                                <h4 class="mb-0 mt-1">{{ $item->nama }}</h4>
+                                                <h5 class="mb-0">{{ $item->jabatan }} ({{ $item->pangkat_pegawai->pangkat->nama }} {{ $item->pangkat_pegawai->pangkat->golongan }})</h5>
+                                            </div>
+                                        </div>
+                                    @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
 
-                <div class="row pl-1">
-                    <div class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner" style="height: 50vh">
+                <div class="row pl-1 mt-1">
+                    <div class="carousel slide" data-ride="carousel" data-interval="5000" style="overflow: hidden">
+                        <div class="carousel-inner" style="height: 47.5vh">
                             @foreach ($image as $item)
                                 @if($loop->index == 0)
-                                    <div class="carousel-item active h-100">
-                                        <img class="img-fluid w-100 h-100" src="{{ asset('storage') }}{{ substr($item->path, 6) }}">
+                                    <div class="carousel-item active">
+                                        <img style="width: 100%; height: 100%;" src="{{ asset('storage') }}{{ substr($item->path, 6) }}">
                                     </div>
                                 @else
-                                    <div class="carousel-item h-100">
-                                        <img class="img-fluid w-100 h-100" src="{{ asset('storage') }}{{ substr($item->path, 6) }}">
+                                    <div class="carousel-item">
+                                        <img style="width: 100%; height: 100%;" src="{{ asset('storage') }}{{ substr($item->path, 6) }}">
                                     </div>
                                 @endif
                             @endforeach

@@ -6,6 +6,7 @@ use App\Models\Welcome;
 use App\Models\VideoInformation;
 use App\Models\ImageInformation;
 use App\Models\Pengumuman;
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -23,13 +24,15 @@ class IndexController extends Controller
         $welcome = Welcome::first();
         $image = Imageinformation::where('aktif', '1')->get();
         $pengumuman = Pengumuman::where('aktif', '1')->get();
+        $pegawai = Pegawai::get();
         
         return view('welcome', compact(
             'welcome',
             'video',
             'image',
             'pengumuman',
-            'schedule'
+            'schedule',
+            'pegawai'
         ));
     }
 

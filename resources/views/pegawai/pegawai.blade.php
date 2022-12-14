@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="card card-outline card-warning">
                 <div class="card-header">
-                    <h3 class="card-title">Master {{ __('sidebar.pegawai') }}
+                    <h3 class="card-title">
                         <button type="button" class="btn btn-success btn-sm btnTambah" id="create-item"
                             data-title="create">Tambah</button>
                     </h3>
