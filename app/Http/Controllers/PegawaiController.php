@@ -67,6 +67,9 @@ class PegawaiController extends Controller
     public function pangkat(Request $request)
     {
         if ($request->ajax()) {
+            if(!$request->pangkat)
+                return response()->json(['failed' => 'Silahka pilih pangkat']);
+
             $pangkat = new PangkatPegawai();
             $pangkat->id_pegawai = $request->id;
             $pangkat->id_pangkat = $request->pangkat;

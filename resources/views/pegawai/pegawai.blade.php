@@ -183,6 +183,7 @@
                     enctype: 'multipart/form-data',
                     dataType: 'json',
                     success: function(data) {
+                        // console.log(data);
                         setTimeout(function() {
                             $('#modal-pangkat').modal('hide');
                             location.replace("{{ route('pegawai.index') }}")

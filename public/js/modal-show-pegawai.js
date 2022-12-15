@@ -47,8 +47,8 @@ $(function () {
 
         $("#modal-delete #id").val(id);
         $("#modal-delete .modal-title").text("Hapus Pegawai");
-        $("#modal-delete .isi").text("Apakah anda yakin ingin menghapus Gambar " + nama +
-            " ini ?");
+        $("#modal-delete .isi").text("Apakah anda yakin ingin menghapus pegawai " + nama +
+            " ?");
 
     })
     $('#modal-delete').on('hide.bs.modal', function () {
@@ -71,6 +71,8 @@ $(function () {
         $('#modal-pangkat #pangkat option').each(function() {
             if ($(this).val() <= id_pangkat) {
                 $(this).attr("disabled", true);
+            }else{
+                $(this).attr("disabled", false);
             }
         });
     })

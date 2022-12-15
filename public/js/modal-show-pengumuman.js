@@ -43,8 +43,8 @@ $(function () {
         $("#st").val(st);
         $("#status_change").val(status);
         $("#modal-change .modal-title").text("Ubah Status Pengumuman");
-        $("#modal-change .isi").text("Apakah anda yakin ingin mengubah Pengumuman" + nama +
-            " ini menjadi " + status + " ?");
+        $("#modal-change .isi").text("Apakah anda yakin ingin mengubah " + nama +
+            " menjadi " + status + " ?");
 
     })
     $('#modal-change').on('hide.bs.modal', function() {
@@ -64,8 +64,8 @@ $(function () {
 
         $("#modal-delete #id").val(id);
         $("#modal-delete .modal-title").text("Hapus Pengumuman");
-        $("#modal-delete .isi").text("Apakah anda yakin ingin menghapus Pengumuman " + nama +
-            " ini ?");
+        $("#modal-delete .isi").text("Apakah anda yakin ingin menghapus " + nama +
+            " ?");
 
     })
     $('#modal-delete').on('hide.bs.modal', function () {
