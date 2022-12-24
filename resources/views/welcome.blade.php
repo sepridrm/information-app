@@ -6,7 +6,6 @@
     <div class="wrapper bg-white d-flex align-items-center justify-content-center">
         <div class="row">
             <div class="col-lg-8 col-8 d-flex flex-column">
-
                 <div class="row" style="height: 10%">
                     <div class="col-lg-1 col-1 d-flex align-items-center justify-content-center">
                         <img class="img-fluid" src="vendor/adminlte/dist/img/merinem.png" style="width: 55px; height: 55px;">
@@ -89,16 +88,16 @@
                                                 src="{{ asset('img/default.jpg') }}" />
                                         @endif
                                         <h4 class="mb-0 mt-2">{{ $item->nama }}</h4>
-                                        @if ($item->terbaik == 1)
-                                            <h6 class="text-center mt-1">Pegawai Terbaik</h6>
-                                        @endif
                                         @if ($item->total > 1 && $item->sebulan >= Carbon\Carbon::now())
-                                            <h6 class="text-center mt-1">telah naik pangkat menjadi</h6>
+                                            <h6 class="text-center badge badge-danger p-1 m-0">naik pangkat menjadi</h6>
                                         @endif
                                         <h5 class="mb-0">
                                             ({{ $item->pangkat_pegawai->pangkat->nama }}
                                             {{ $item->pangkat_pegawai->pangkat->golongan }})
                                         </h5>
+                                        @if ($item->terbaik == 1)
+                                            <h6 class="text-center badge badge-danger p-1 m-0">Pegawai Terbaik</h6>
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach
@@ -121,16 +120,16 @@
                         </div>
                     </div>
                 </div>
-
-                @if (Route::has('login'))
-                    <div class="hidden" style="position: absolute; top: 7px; right: 15px;">
-                        <x-adminlte-button theme="dark" icon="fab fa-sm fa fa-arrows-alt" onclick="openFullscreen();" />
-                        <a href="{{ url('/home') }}">
-                            <x-adminlte-button theme="dark" icon="fab fa-sm fa fa-user" />
-                        </a>
-                    </div>
-                @endif
             </div>
+
+            @if (Route::has('login'))
+                <div class="hidden" style="position: absolute; top: 7px; right: 7px;">
+                    <x-adminlte-button theme="dark" icon="fab fa-sm fa fa-arrows-alt" onclick="openFullscreen();" />
+                    <a href="{{ url('/home') }}">
+                        <x-adminlte-button theme="dark" icon="fab fa-sm fa fa-user" />
+                    </a>
+                </div>
+            @endif
         </div>
     </div>
 
