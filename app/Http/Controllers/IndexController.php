@@ -21,7 +21,10 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $schedule = ["ashar" => "15:32", "dzuhur" => "12:06", "isya" => "19:31", "maghrib" => "18:16", "subuh" => "04:30", "tanggal" => "Sabtu, 24 Dec 2022"];
+        $schedule = ["ashar" => "15:32", "dzuhur" => "12:06", "isya" => "19:31", "maghrib" => "18:16", "subuh" => "04:30", "tanggal" => date("d M Y")];
+        if ( @fopen("https://api.banghasan.com", "r") )
+            $schedule = Http::retry(3, 100)->get('https://api.banghasan.com/sholat/format/json/jadwal/kota/613/tanggal/'.date("Y-m-d"))->json()['jadwal']['data'];
+
         $video = VideoInformation::where('aktif', '1')->get();
         $welcome = Welcome::first();
         $image = Imageinformation::where('aktif', '1')->get();
@@ -109,12 +112,4 @@ class IndexController extends Controller
         //
     }
 
-    public function getJadwal() {
-        $schedule = Http::retry(3, 100)->get('https://api.banghasan.com/sholat/format/json/jadwal/kota/613/tanggal/'.date("Y-m-d"))->json()['jadwal']['data'];
-    }
-
-    public function is_connected()
-    {
-        return connection_status();
-    }
 }
