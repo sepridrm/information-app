@@ -128,6 +128,17 @@ class PegawaiController extends Controller
         }
     }
 
+    public function change_status(Request $request)
+    {
+        if ($request->ajax()) {
+            $status = Pegawai::find($request->id);
+            $status->terbaik = $request->st;
+            $status->save();
+
+            return response()->json(['success' => 'Status berhasil diubah']);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *

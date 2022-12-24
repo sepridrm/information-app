@@ -18,6 +18,7 @@ class CreatePegawaisTable extends Migration
             $table->string('nama', 50);
             $table->string('jabatan', 50);
             $table->string('foto', 100);
+            $table->boolean('terbaik')->default(0);
             $table->timestamps();
         });
     }

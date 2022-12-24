@@ -25,11 +25,11 @@ class IndexController extends Controller
         $welcome = Welcome::first();
         $image = Imageinformation::where('aktif', '1')->get();
         $pengumuman = Pengumuman::where('aktif', '1')->get();
-        $pegawai = Pegawai::select('pegawais.id', 'nama', 'jabatan', 'foto', DB::raw('count(*) as total'), DB::raw('DATE_ADD(pangkat_pegawais.created_at, INTERVAL 1 MONTH) as sebulan'))
+        $pegawai = Pegawai::select('pegawais.id', 'nama', 'jabatan', 'foto', DB::raw('count(*) as total'), DB::raw('DATE_ADD(pangkat_pegawais.created_at, INTERVAL 1 MONTH) as sebulan'), 'terbaik')
             ->join('pangkat_pegawais', 'pangkat_pegawais.id_pegawai', 'pegawais.id')
             ->groupBy('id_pegawai')
             ->get();
-        
+
         return view('welcome', compact(
             'welcome',
             'video',

@@ -35,6 +35,31 @@ $(function () {
         $("#modal_cu").trigger("reset");
     })
 
+    $(document).on('click', "#terbaik", function () {
+        $(this).addClass('terbaik-trigger-clicked');
+        $('#modal-change').modal('show')
+    })
+    $('#modal-change').on('show.bs.modal', function() {
+        var el = $(".terbaik-trigger-clicked");
+        
+        var id = el.data('id');
+        var st = el.data('st');
+        var nama = el.data("nama");
+        var status = el.data("status");
+
+        $("#id").val(id);
+        $("#st").val(st);
+        $("#status_change").val(status);
+        $("#modal-change .modal-title").text("Ubah Status Pegawai Terbaik");
+        $("#modal-change .isi").text("Apakah anda yakin ingin mengubah " + nama +
+            " menjadi " + status + " ?");
+
+    })
+    $('#modal-change').on('hide.bs.modal', function() {
+        $('.terbaik-trigger-clicked').removeClass('terbaik-trigger-clicked')
+        $("#modal-change").trigger("reset");
+    })
+
     $(document).on('click', "#delete-item", function () {
         $(this).addClass('delete-item-trigger-clicked');
         $('#modal-delete').modal('show')

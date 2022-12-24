@@ -38,6 +38,7 @@
                                 <th>Pangkat</th>
                                 <th>Golongan</th>
                                 <th>Gambar</th>
+                                <th>Pegawai Terbaik</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -55,6 +56,21 @@
                                                 src="{{ asset('storage') }}/{{ substr($item->foto, 7) }}" />
                                         @else
                                             <img width="100px" height="100px" src="{{ asset('img/default.jpg') }}" />
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($item->terbaik == 1)
+                                            <a href="javascript:;" id="terbaik" class="btn btn-sm btn-success"
+                                                data-id="{{ $item->id }}" data-st="0" data-status="Belum Terbaik"
+                                                data-nama="{{ $item->nama }}" data-title="Change data">
+                                                Terbaik
+                                            </a>
+                                        @else
+                                            <a href="javascript:;" id="terbaik" class="btn btn-sm btn-danger"
+                                                data-id="{{ $item->id }}" data-st="1" data-status="Terbaik"
+                                                data-nama="{{ $item->nama }}" data-title="Change data">
+                                                Belum Terbaik
+                                            </a>
                                         @endif
                                     </td>
                                     <td>
@@ -165,6 +181,42 @@
 @push('js')
     <script src="{{ asset('js/modal-show-pegawai.js') }}"></script>
 
+    {{-- terbaik --}}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#btnchange').click(function(e) {
+                e.preventDefault();
+                $(this).html('Proses Update..');
+                $('#btnchange').attr("disabled", true);
+                var form = $('#changeForm')[0];
+                var formdata = new FormData(form);
+                $.ajax({
+                    processData: false,
+                    contentType: false,
+                    data: formdata,
+                    url: "{{ route('change.status.pegawai') }}",
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    dataType: 'json',
+                    success: function(data) {
+                        setTimeout(function() {
+                            $('#modal-change').modal('hide');
+                            location.replace("{{ route('pegawai.index') }}")
+                        }, 2200);
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                        jQuery('.alert-danger').hide();
+                        setTimeout(function() {
+                            $('#btnchange').html('Ubah');
+                            $('#btnchange').attr("disabled", false);
+                        }, 2200);
+                    }
+                });
+            });
+        });
+    </script>
+
     <!-- pangkat -->
     <script type="text/javascript">
         $(document).ready(function() {
@@ -195,42 +247,6 @@
                         setTimeout(function() {
                             $('#pangkatsimpan').html('Simpan');
                             $('#pangkatsimpan').attr("disabled", false);
-                        }, 2200);
-                    }
-                });
-            });
-        });
-    </script>
-
-    <!-- change -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#btnchange').click(function(e) {
-                e.preventDefault();
-                $(this).html('Proses Update..');
-                $('#btnchange').attr("disabled", true);
-                var form = $('#changeForm')[0];
-                var formdata = new FormData(form);
-                $.ajax({
-                    processData: false,
-                    contentType: false,
-                    data: formdata,
-                    url: "{{ route('change.status.pegawai') }}",
-                    type: "POST",
-                    enctype: 'multipart/form-data',
-                    dataType: 'json',
-                    success: function(data) {
-                        setTimeout(function() {
-                            $('#modal-change').modal('hide');
-                            location.replace("{{ route('pegawai.index') }}")
-                        }, 2200);
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                        jQuery('.alert-danger').hide();
-                        setTimeout(function() {
-                            $('#btnchange').html('Ubah');
-                            $('#btnchange').attr("disabled", false);
                         }, 2200);
                     }
                 });

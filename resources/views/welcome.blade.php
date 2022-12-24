@@ -89,6 +89,9 @@
                                                 src="{{ asset('img/default.jpg') }}" />
                                         @endif
                                         <h4 class="mb-0 mt-2">{{ $item->nama }}</h4>
+                                        @if ($item->terbaik == 1)
+                                            <h6 class="text-center mt-1">Pegawai Terbaik</h6>
+                                        @endif
                                         @if ($item->total > 1 && $item->sebulan >= Carbon\Carbon::now())
                                             <h6 class="text-center mt-1">telah naik pangkat menjadi</h6>
                                         @endif
@@ -107,9 +110,9 @@
                     <div class="carousel slide" data-ride="carousel" data-interval="5000" style="overflow: hidden">
                         <div class="carousel-inner bg-info" style="height: 47.5vh; width: 100%">
                             @foreach ($image as $item)
-                                <div class="bg-warning carousel-item {{ $loop->index == 0 ? ' active' : '' }}" style="width: 100%; height: 100%;">
-                                    <img class="img-fluid"
-                                        src="{{ asset('storage') }}{{ substr($item->path, 6) }}">
+                                <div class="bg-warning carousel-item {{ $loop->index == 0 ? ' active' : '' }}"
+                                    style="width: 100%; height: 100%;">
+                                    <img class="img-fluid" src="{{ asset('storage') }}{{ substr($item->path, 6) }}">
                                 </div>
                             @endforeach
                         </div>
