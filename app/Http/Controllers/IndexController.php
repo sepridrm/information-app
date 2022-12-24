@@ -7,6 +7,7 @@ use App\Models\VideoInformation;
 use App\Models\ImageInformation;
 use App\Models\Pengumuman;
 use App\Models\Pegawai;
+use App\Models\VideoIslami;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
@@ -20,11 +21,12 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $schedule = Http::get('https://api.banghasan.com/sholat/format/json/jadwal/kota/613/tanggal/'.date("Y-m-d"))->json()['jadwal']['data'];
+        $schedule = ["ashar" => "15:32", "dzuhur" => "12:06", "isya" => "19:31", "maghrib" => "18:16", "subuh" => "04:30", "tanggal" => "Sabtu, 24 Dec 2022"];
         $video = VideoInformation::where('aktif', '1')->get();
         $welcome = Welcome::first();
         $image = Imageinformation::where('aktif', '1')->get();
         $pengumuman = Pengumuman::where('aktif', '1')->get();
+        $video_islami = VideoIslami::first();
         $pegawai = Pegawai::select('pegawais.id', 'nama', 'jabatan', 'foto', DB::raw('count(*) as total'), DB::raw('DATE_ADD(pangkat_pegawais.created_at, INTERVAL 1 MONTH) as sebulan'), 'terbaik')
             ->join('pangkat_pegawais', 'pangkat_pegawais.id_pegawai', 'pegawais.id')
             ->groupBy('id_pegawai')
@@ -36,7 +38,8 @@ class IndexController extends Controller
             'image',
             'pengumuman',
             'schedule',
-            'pegawai'
+            'pegawai',
+            'video_islami'
         ));
     }
 
@@ -104,5 +107,14 @@ class IndexController extends Controller
     public function destroy(Pangkat $pangkat)
     {
         //
+    }
+
+    public function getJadwal() {
+        $schedule = Http::retry(3, 100)->get('https://api.banghasan.com/sholat/format/json/jadwal/kota/613/tanggal/'.date("Y-m-d"))->json()['jadwal']['data'];
+    }
+
+    public function is_connected()
+    {
+        return connection_status();
     }
 }

@@ -55,4 +55,8 @@ Route::group(['namespace' => 'App\Http\Controllers', 'middleware' => 'auth'], fu
         Route::patch('/change', 'PegawaiController@change_status')->name('change.status.pegawai');
         Route::delete('', 'PegawaiController@destroy')->name('pegawai.destroy');
     });
+    Route::group(['prefix' => 'video-islami'], function(){
+        Route::get('', 'VideoIslamiController@index')->name('video-islami.index');
+        Route::patch('', 'VideoIslamiController@update')->name('video-islami.update');
+    });
 });

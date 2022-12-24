@@ -83,7 +83,7 @@
                                         <h4>{{ $item->jabatan }}</h4>
                                         @if ($item->foto != '')
                                             <img class="border rounded" width="35%" height="35%"
-                                                src="{{ asset('storage') }}/{{ substr($item->foto, 7) }}" />
+                                                src="{{ asset('storage') }}{{ substr($item->foto, 6) }}" />
                                         @else
                                             <img class="border rounded" width="35%" height="35%"
                                                 src="{{ asset('img/default.jpg') }}" />
@@ -108,12 +108,15 @@
 
                 <div class="row pl-1 mt-1">
                     <div class="carousel slide" data-ride="carousel" data-interval="5000" style="overflow: hidden">
-                        <div class="carousel-inner bg-info" style="height: 47.5vh; width: 100%">
+                        <div class="carousel-inner" style="height: 47.5vh; width: 100%">
                             @foreach ($image as $item)
                                 <div class="bg-warning carousel-item {{ $loop->index == 0 ? ' active' : '' }}"
                                     style="width: 100%; height: 100%;">
                                     <img class="img-fluid" src="{{ asset('storage') }}{{ substr($item->path, 6) }}">
-                                </div>
+                                    <div class="carousel-item {{ $loop->index == 0 ? ' active' : '' }}"
+                                        style="width: 100%; height: 100%;">
+                                        <img class="img-fluid" src="{{ asset('storage') }}{{ substr($item->path, 6) }}">
+                                    </div>
                             @endforeach
                         </div>
                     </div>
@@ -138,7 +141,7 @@
                 <div class="modal-body">
                     <h5 class="modal-title text-center mb-2" id="notifTitle"></h5>
                     <video id="notifVideo" style="width: 100%; margin: 0">
-                        <source src="{{ asset('video') }}/adzan.mov" type="video/mp4">
+                        <source src="{{ asset('storage') }}{{ substr($video_islami->path, 6) }}" type="video/mp4">
                     </video>
                 </div>
             </div>
@@ -163,7 +166,7 @@
             var temp = {
                 nama: key[0].toUpperCase() + key.slice(1),
                 jam: schedule[key] + ":00",
-                // jam: key === "dzuhur" ? "12:36:20" : schedule[key] + ":00"
+                // jam: key === "dzuhur" ? "09:04:00" : schedule[key] + ":00"
             }
             arrSchedule.push(temp)
         }
@@ -191,7 +194,7 @@
                 return el.jam === jam;
             });
             if (adzan)
-                showNotif("Saatnya adzan " + adzan.nama);
+                showNotif("Saatnya sholat " + adzan.nama);
 
             setTimeout('setJam()', 1000);
         }
