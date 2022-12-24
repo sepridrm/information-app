@@ -345,6 +345,12 @@ return [
             'label_color' => 'success',
         ],
         [
+            'text'        => 'Video Islami/Adzan',
+            'url'         => 'video-islami',
+            'icon'        => 'far fa-fw fa-file-video',
+            'label_color' => 'success',
+        ],
+        [
             'text'        => 'Pengumuman',
             'url'         => 'pengumuman',
             'icon'        => 'far fa-fw fa-bell',
