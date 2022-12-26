@@ -55,15 +55,9 @@
                         <div class="carousel slide" data-ride="carousel" data-interval="4000">
                             <div class="carousel-inner px-2">
                                 @foreach ($pengumuman as $item)
-                                    @if ($loop->index == 0)
-                                        <div class="carousel-item active">
-                                            <h4 class="mb-0 text-center">{{ $item->isi }}</h4>
-                                        </div>
-                                    @else
-                                        <div class="carousel-item">
-                                            <h4 class="mb-0 text-center">{{ $item->isi }}</h4>
-                                        </div>
-                                    @endif
+                                    <div class="carousel-item {{ $loop->index == 0 ? ' active' : '' }}">
+                                        <h4 class="mb-0 text-center">{{ $item->isi }}</h4>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
@@ -96,7 +90,7 @@
                                             {{ $item->pangkat_pegawai->pangkat->golongan }})
                                         </h5>
                                         @if ($item->terbaik == 1)
-                                            <h6 class="text-center badge badge-danger p-1 m-0">Pegawai Terbaik</h6>
+                                            <h6 class="text-center badge badge-warning p-1 m-0">Pegawai Terbaik</h6>
                                         @endif
                                     </div>
                                 </div>
@@ -109,13 +103,10 @@
                     <div class="carousel slide" data-ride="carousel" data-interval="5000" style="overflow: hidden">
                         <div class="carousel-inner" style="height: 47.5vh; width: 100%">
                             @foreach ($image as $item)
-                                <div class="bg-warning carousel-item {{ $loop->index == 0 ? ' active' : '' }}"
+                                <div class="bg-warning carousel-item {{ $loop->index == 0 ? ' active' : '' }}" 
                                     style="width: 100%; height: 100%;">
                                     <img class="img-fluid" src="{{ asset('storage') }}{{ substr($item->path, 6) }}">
-                                    <div class="carousel-item {{ $loop->index == 0 ? ' active' : '' }}"
-                                        style="width: 100%; height: 100%;">
-                                        <img class="img-fluid" src="{{ asset('storage') }}{{ substr($item->path, 6) }}">
-                                    </div>
+                                </div>
                             @endforeach
                         </div>
                     </div>
